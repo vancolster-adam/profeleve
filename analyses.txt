@@ -8,7 +8,7 @@ Avant même de commencer l’écoute, la pochette de l’album semble déjà év
 \1: Taking What's Not Yours
 En ce qui concerne la reupération de matériel ancien, je me suis pas trompé. Le début commence par un sample de "Tom Scott - Strut Your Stuff" qui date 1974 sur le quel TV Girl a rajoputé un effet de Delay et accentué la reverb déjà presente sur l'orginal. Dans cette esxtrait on entend un Rohdes, une guitare electrique (qui apporte une touche funk) et du saxophone (qui double la mélodie au Rohdes). ce début samplé et répéte en boucle durant toute la durée du titre lui servira de base harmonique : C#-A#m7-D#7-C#sus4, en boucle. J'ai aussi eu l'impression d'entendre un orgue mais il pourrait tout aussi bien s'agir d'un effet de chorus appliqué au Rohdes. En cherchant les samples, j'ai aussi vu que les paroles "That's thievin', stealin', takin' what's not yours" provenaient de « Don't Copy That Floppy » (6:01), une chanson de rap pour une campagne de lutte contre le piratage informatique (1992). Ce qui est intéressant, dans pour cette chanon ce n'est pas tant le sample de la voix mais le motif de la batterie : vraissemblablement, elle a été interpolé! 
 
-Les paroles décrivent les suites d’une rupture de couple, avec une femme qui aurait décidé de quitter l’auteur. Pourtant, l’identité de la personne qui raconte l’histoire reste incertaine pendant une grande partie de la chanson : les paroles sont chantées par un homme et une femme mixés au même niveau sonore, ce qui rend a priori impossible de savoir s’il s’agit d’une relation hétérosexuelle ou homosexuelle. La réponse (si réponse il y a) se devine à la fin, lorsque les deux voix se séparent enfin : l’homme s’éloigne de la mélodie de base à la manière d’un freestyle (« I want to dedicate this jam »), pendant que la femme chante un « woo-hoo » répété en boucle sur deux notes. L’homme prend alors le rôle principal, puisqu’il continue seul à énoncer les paroles. On peut même remarquer l’usage du mot « man » comme interjection dans « Sometimes you gotta leave in a hurry, man, what can I say », plutôt marqueur d’une prise de parole masculine (bien que ce ne soit une vérité absolue).
+Les paroles décrivent les suites d’une rupture de couple, avec une femme qui aurait décidé de quitter l’auteur. Pourtant, l’identité de la personne qui raconte l’histoire reste incertaine pendant une grande partie de la chanson : les paroles sont chantées par un homme et une femme mixés au même niveau sonore, ce qui rend a priori impossible de savoir s’il s’agisait d’une relation hétérosexuelle ou homosexuelle. La réponse (si réponse il y a) se devine à la fin, lorsque les deux voix se séparent enfin : l’homme s’éloigne de la mélodie de base à la manière d’un freestyle (« I want to dedicate this jam »), pendant que la femme chante un « woo-hoo » répété en boucle sur deux notes. L’homme prend alors le rôle principal, puisqu’il continue seul à énoncer les paroles. On peut même remarquer l’usage du mot « man » comme interjection dans « Sometimes you gotta leave in a hurry, man, what can I say », plutôt marqueur d’une prise de parole masculine (bien que ce ne soit une vérité absolue).
 
 Autre éléments : mention de Laura Nyro et il y a aussi un court sample extrait d'un discours du président Américain Richard Nixon en 1973 ("I'm not a crook").
 
@@ -16,8 +16,10 @@ Bass added or from original???
 
 le tempo et le motif trythmique de la batterie ressemble fortement à celui de du sample.
 
-\2
-Dans ce titre, les paroles proposent plutôt le point de des 2 partis
+\2: Song About Me
+Dans ce titre, il s'agit encore d'une rupture (la même ?) avec la différence qu'il y est mention d'événements antérieure et que les paroles proposent le point des 2 partis, homme et femme (bien que plus longuement celui de l'homme). De manière générale les deux semblent vouloir dégager une forme de distance par rapport à la fin de leur couple et un un dedins pour l'un pour l'autre.
+
+
 \3
 \4
 \5
