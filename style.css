@@ -76,7 +76,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid #333;
+    border-right: 1px solid #333; /* <-- Modifié ici */
 }
 
 .placeholder-box {
@@ -98,7 +98,7 @@ body {
         flex-direction: column;
     }
     .right-panel {
-        border-left: none;
-        border-top: 1px solid #333;
+        border-right: none;
+        border-bottom: 1px solid #333; /* <-- Modifié ici */
     }
 }
