@@ -1,0 +1,104 @@
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Structure divisée en deux */
+.split-layout {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- PARTIE GAUCHE --- */
+.left-panel {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: #181818;
+}
+
+.left-panel h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: #282828;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #b3b3b3;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.placeholder-text {
+    color: #6a6a6a;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* --- PARTIE DROITE --- */
+.right-panel {
+    flex: 1;
+    background-color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #333;
+}
+
+.placeholder-box {
+    text-align: center;
+    padding: 2rem;
+    border: 2px dashed #333;
+    border-radius: 12px;
+    color: #555;
+}
+
+.placeholder-box h2 {
+    margin-bottom: 0.5rem;
+    color: #777;
+}
+
+/* Responsive : on passe en colonne sur mobile */
+@media (max-width: 768px) {
+    .split-layout {
+        flex-direction: column;
+    }
+    .right-panel {
+        border-left: none;
+        border-top: 1px solid #333;
+    }
+}
