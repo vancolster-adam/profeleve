@@ -172,3 +172,64 @@ body {
         width: auto;
     }
 }
+
+/* =========================================
+   NOUVEAUX STATUTS & LISTE D'ATTENTE
+   ========================================= */
+
+/* Statut "En cours" dans la grille */
+.statut-en-cours {
+    border-bottom: 3px solid #ff9800; /* Orange */
+}
+
+/* Conteneur de la liste d'attente */
+.waiting-list-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: stretch; /* Pour que les éléments prennent toute la largeur */
+    justify-content: flex-start; /* Aligné en haut */
+    border: none; /* On enlève les pointillés */
+    padding: 0;
+}
+
+/* Un élément de la liste d'attente */
+.waiting-item {
+    background-color: #333;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #555; /* Barre de couleur par défaut */
+}
+
+/* Style spécifique si c'est en cours de correction (tout en haut) */
+.waiting-en-cours {
+    border-left-color: #ff9800;
+    background-color: #3a3226; /* Légèrement teinté d'orange */
+}
+
+.waiting-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.waiting-info strong {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.waiting-info span {
+    font-size: 0.85rem;
+    color: #b3b3b3;
+}
+
+.waiting-status {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ff9800; /* Couleur du texte pour "En cours" */
+    background: rgba(255, 152, 0, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+}
