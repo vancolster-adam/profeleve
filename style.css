@@ -1,4 +1,6 @@
-/* Reset de base */
+/* =========================================
+   RESET & BASE
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -13,70 +15,22 @@ body {
     overflow: hidden;
 }
 
-/* Structure divisée en deux */
+/* =========================================
+   LAYOUT PRINCIPAL (Gauche / Droite)
+   ========================================= */
 .split-layout {
     display: flex;
     height: 100vh;
 }
 
-/* --- PARTIE GAUCHE --- */
-.left-panel {
-    flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
-    background-color: #181818;
-}
-
-.left-panel h1 {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
-}
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.card {
-    background-color: #282828;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-}
-
-.card h2 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: #b3b3b3;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.card-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.placeholder-text {
-    color: #6a6a6a;
-    font-style: italic;
-    font-size: 0.9rem;
-}
-
-/* --- PARTIE DROITE --- */
-.right-panel {
+/* --- PARTIE GAUCHE (Placeholder) --- */
+.placeholder-panel {
     flex: 1;
     background-color: #0a0a0a;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: 1px solid #333; /* <-- Modifié ici */
+    border-right: 1px solid #333;
 }
 
 .placeholder-box {
@@ -92,13 +46,133 @@ body {
     color: #777;
 }
 
-/* Responsive : on passe en colonne sur mobile */
+/* --- PARTIE DROITE (Tableau de bord) --- */
+.dashboard-panel {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: #181818;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.dashboard-panel h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* =========================================
+   HAUT : Grille des classes
+   ========================================= */
+.dashboard-top {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.class-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.class-row h3 {
+    width: 40px; /* Assure l'alignement vertical des grilles */
+    color: #b3b3b3;
+    font-size: 1.2rem;
+    text-align: right;
+}
+
+.class-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 colonnes */
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+/* Cas spécifique de la 3e : 1 seule colonne pour que la case ait la même taille */
+.class-grid.single-col {
+    grid-template-columns: 1fr; 
+    max-width: calc(20% - 0.8rem); 
+}
+
+.class-box {
+    background-color: #282828;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.class-box:hover {
+    background-color: #333;
+    border-color: #1db954; /* Vert Spotify */
+}
+
+/* =========================================
+   BAS : Liste d'attente
+   ========================================= */
+.dashboard-bottom {
+    flex-grow: 1;
+    background-color: #282828;
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-bottom h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #b3b3b3;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.waiting-list-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #444;
+    border-radius: 8px;
+}
+
+.placeholder-text {
+    color: #6a6a6a;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   RESPONSIVE (Mobile)
+   ========================================= */
 @media (max-width: 768px) {
     .split-layout {
         flex-direction: column;
     }
-    .right-panel {
+    .placeholder-panel {
         border-right: none;
-        border-bottom: 1px solid #333; /* <-- Modifié ici */
+        border-bottom: 1px solid #333;
+        padding: 2rem;
+    }
+    .dashboard-panel {
+        padding: 1.5rem;
+    }
+    .class-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .class-row h3 {
+        text-align: left;
+        width: auto;
+    }
+    .class-grid.single-col {
+        max-width: 100%;
     }
 }
