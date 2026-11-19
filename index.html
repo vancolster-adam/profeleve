@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <main class="split-layout">
         <!-- PARTIE GAUCHE : Placeholder -->
-        <section class="right-panel">
+        <section class="placeholder-panel">
             <div class="placeholder-box">
                 <h2>Work in progress</h2>
                 <p>Cette partie n'est pas encore codée.</p>
@@ -17,33 +18,63 @@
         </section>
 
         <!-- PARTIE DROITE : Tableau de bord -->
-        <section class="left-panel">
+        <section class="dashboard-panel">
             <h1>État des corrections</h1>
             
-            <div class="dashboard-grid">
-                <div class="card">
-                    <h2>Classes corrigées</h2>
-                    <div id="classes-corrigees" class="card-content">
-                        <p class="placeholder-text">En attente de données...</p>
+            <!-- HAUT : Grille des classes -->
+            <div class="dashboard-top">
+                
+                <!-- Rangée 3e -->
+                <div class="class-row">
+                    <h3>3e</h3>
+                    <div class="class-grid single-col">
+                        <div class="class-box">3A</div>
                     </div>
                 </div>
-                <div class="card">
-                    <h2>Liste d'attente</h2>
-                    <div id="liste-attente" class="card-content">
-                        <p class="placeholder-text">En attente de données...</p>
+
+                <!-- Rangée 4e -->
+                <div class="class-row">
+                    <h3>4e</h3>
+                    <div class="class-grid">
+                        <div class="class-box">4A</div>
+                        <div class="class-box">4B</div>
+                        <div class="class-box">4C</div>
+                        <div class="class-box">4D</div>
+                        <div class="class-box">4E</div>
                     </div>
                 </div>
-                <div class="card">
-                    <h2>Estimation</h2>
-                    <div id="estimation" class="card-content">
-                        <p class="placeholder-text">En attente de données...</p>
+
+                <!-- Rangée 5e -->
+                <div class="class-row">
+                    <h3>5e</h3>
+                    <div class="class-grid">
+                        <div class="class-box">5A</div>
+                        <div class="class-box">5B</div>
+                        <div class="class-box">5C</div>
+                        <div class="class-box">5D</div>
+                        <div class="class-box">5E</div>
                     </div>
                 </div>
-                <div class="card">
-                    <h2>Progression globale</h2>
-                    <div id="progression" class="card-content">
-                        <p class="placeholder-text">En attente de données...</p>
+
+                <!-- Rangée 6e -->
+                <div class="class-row">
+                    <h3>6e</h3>
+                    <div class="class-grid">
+                        <div class="class-box">6A</div>
+                        <div class="class-box">6B</div>
+                        <div class="class-box">6C</div>
+                        <div class="class-box">6D</div>
+                        <div class="class-box">6E</div>
                     </div>
+                </div>
+
+            </div>
+
+            <!-- BAS : Liste d'attente -->
+            <div class="dashboard-bottom">
+                <h2>Liste d'attente</h2>
+                <div id="liste-attente" class="waiting-list-content">
+                    <p class="placeholder-text">Aucune correction en attente pour le moment.</p>
                 </div>
             </div>
         </section>
