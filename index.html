@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - Tableau de bord</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Chargement des styles découpés -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
 </head>
 <body>
 
     <main class="split-layout">
-        <!-- PARTIE GAUCHE : Placeholder -->
         <section class="placeholder-panel">
             <div class="placeholder-box">
                 <h2>Work in progress</h2>
@@ -17,74 +19,41 @@
             </div>
         </section>
 
-        <!-- PARTIE DROITE : Tableau de bord -->
         <section class="dashboard-panel">
             <h1>État des corrections</h1>
             
-            <!-- HAUT : Grille des classes -->
             <div class="dashboard-top">
-                
-                <!-- Rangée 3e -->
                 <div class="class-row">
                     <h3>3e</h3>
-                    <div class="class-grid">
-                        <div class="class-box">3A</div>
-                        <div class="class-box">3B</div>
-                        <div class="class-box">3C</div>
-                        <div class="class-box">3D</div>
-                    </div>
+                    <div class="class-grid" id="grid-3e"></div>
                 </div>
-
-                <!-- Rangée 4e -->
                 <div class="class-row">
                     <h3>4e</h3>
-                    <div class="class-grid">
-                        <div class="class-box">4A</div>
-                        <div class="class-box">4B</div>
-                        <div class="class-box">4C</div>
-                        <div class="class-box">4D</div>
-                        <div class="class-box">4E</div>
-                    </div>
+                    <div class="class-grid" id="grid-4e"></div>
                 </div>
-
-                <!-- Rangée 5e -->
                 <div class="class-row">
                     <h3>5e</h3>
-                    <div class="class-grid">
-                        <div class="class-box">5A</div>
-                        <div class="class-box">5B</div>
-                        <div class="class-box">5C</div>
-                        <div class="class-box">5D</div>
-                        <div class="class-box">5E</div>
-                    </div>
+                    <div class="class-grid" id="grid-5e"></div>
                 </div>
-
-                <!-- Rangée 6e -->
                 <div class="class-row">
                     <h3>6e</h3>
-                    <div class="class-grid">
-                        <div class="class-box">6A</div>
-                        <div class="class-box">6B</div>
-                        <div class="class-box">6C</div>
-                        <div class="class-box">6D</div>
-                        <div class="class-box">6E</div>
-                    </div>
+                    <div class="class-grid" id="grid-6e"></div>
                 </div>
-
             </div>
 
-            <!-- BAS : Liste d'attente -->
             <div class="dashboard-bottom">
                 <h2>Liste d'attente</h2>
                 <div id="liste-attente" class="waiting-list-content">
-                    <p class="placeholder-text">Aucune correction en attente pour le moment.</p>
+                    <!-- Rempli par le JS -->
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Chargement des scripts -->
+    <!-- Chargement des scripts découpés (l'ordre est important) -->
     <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script src="ui.js"></script>
+    <script src="logic.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
