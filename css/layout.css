@@ -4,61 +4,92 @@
 .split-layout {
     display: flex;
     height: 100vh;
+    width: 100vw;
 }
 
-/* --- PARTIE GAUCHE (Analyse) --- */
+/* =========================================
+   PARTIE GAUCHE (Analyse)
+   ========================================= */
 .analysis-panel {
     flex: 1;
     background-color: #0a0a0a;
     display: flex;
-    justify-content: center; /* Centre le contenu */
-    align-items: flex-start; /* Aligne en haut, pas au milieu */
-    border-right: 1px solid #333; /* Bordure vers le dashboard */
-    overflow-y: auto;
-    padding: 2rem;
+    flex-direction: column;
+    border-right: 1px solid #333;
+    overflow-y: auto; /* Le scroll se fait ici */
+    padding: 0 2rem 2rem 2rem; /* Pas de padding en haut, géré par le titre */
 }
 
-/* Le conteneur limité en largeur pour que ça ne soit pas écrasant */
 .analysis-container {
     width: 100%;
     max-width: 700px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    color: #d1d1d1;
+    align-self: center; /* Centre le contenu sous le titre */
 }
 
-/* --- PARTIE DROITE (Tableau de bord) --- */
+/* =========================================
+   PARTIE DROITE (Dashboard)
+   ========================================= */
 .dashboard-panel {
     flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
     background-color: #181818;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    overflow-y: auto; /* Le scroll se fait ici */
+    padding: 0 2rem 2rem 2rem; /* Pas de padding en haut */
 }
 
-.dashboard-panel h1 {
+/* =========================================
+   TITRES DES SECTIONS (Sticky en haut)
+   ========================================= */
+.section-title {
+    position: sticky;
+    top: 0;
+    padding: 2rem 0 1rem 0; /* Recrée l'espace au-dessus du titre */
+    margin: 0 0 1rem 0;
     font-size: 1.8rem;
     font-weight: 600;
+    color: #ffffff;
+    z-index: 10; /* Force le titre à passer au-dessus du contenu */
+    width: 100%;
+}
+
+/* On donne à chaque titre le fond exact de son panneau pour cacher le texte qui défile */
+.analysis-panel .section-title {
+    background-color: #0a0a0a; 
+}
+
+.dashboard-panel .section-title {
+    background-color: #181818;
 }
 
 /* =========================================
    RESPONSIVE (Mobile)
    ========================================= */
 @media (max-width: 768px) {
+    html, body {
+        overflow: auto; /* Sur mobile, la page entière scrolle */
+        height: auto;
+    }
+    
     .split-layout {
         flex-direction: column;
-        height: auto; /* On laisse la page scroller naturellement sur mobile */
+        height: auto;
     }
     
     .analysis-panel {
         border-right: none;
         border-bottom: 1px solid #333;
-        padding: 1.5rem;
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        overflow-y: visible;
     }
-
+    
     .dashboard-panel {
-        padding: 1.5rem;
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        overflow-y: visible;
     }
 }
