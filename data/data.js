@@ -8,7 +8,7 @@ const siteData = {
     "4C": { pp: "Véronique GOUDALLE", nom: "Andrée Chedid", eleves: 25, statut: "evaluated", absents: "inconnu" },
     "4D": { pp: "Yann HENRY", nom: "Olympe de Gouges", eleves: 26, statut: "evaluated", absents: 0 },    
     "4E": { pp: "Ioulia MASSADÉ", nom: "George Eliot", eleves: 25, statut: "grading", absents: "inconnu" },
-    "5A": { pp: "Aïssa KERMEZLI", nom: "Jamie Edwards", eleves: 29, statut: "evaluated", absents: 0 },
+    "5A": { pp: "Aïssa KERMEZLI", nom: "Jamie Edwards", eleves: 29, statut: "evaluated_23/11/2026", absents: 0 },
     "5B": { pp : "François-Xavier LEDOUX", nom: "Blaise Pascal", eleves: 25, statut: "returned", absents: 0 },
     "5C": { pp: "", nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "5D": { pp: "", nom: "", eleves: 0, statut: "evaluated", absents: 0 },
