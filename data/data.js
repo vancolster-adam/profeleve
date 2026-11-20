@@ -11,7 +11,7 @@ const siteData = {
     "5A": { pp: "Aïssa KERMEZLI", nom: "Jamie Edwards", eleves: 29, statut: "evaluated_23/11/2026", absents: 0 },
     "5B": { pp : "François-Xavier LEDOUX", nom: "Blaise Pascal", eleves: 25, statut: "returned", absents: "inconnu" },
     "5C": { pp: "Clément BAROIN", nom: "Isabelle O'Brien", eleves: 30, statut: "evaluated_23/112026", absents: "inconnu" },
-    "5D": { pp: "Claire VALLET", nom: "Alexander Bell", eleves: 29, statut: "grading", absents: "inconnu" },
+    "5D": { pp: "Claire VALLET", nom: "Alexander Bell", eleves: 29, statut: "scored", absents: "inconnu" },
     "5E": { pp: "Marta MONTEMERLO", nom: "Marie Perrin", eleves: 29, statut: "returned", absents: 3 },
     "6A": { pp: "Nicolas BLANC", nom: "Arvernes", eleves: 27, statut: "returned", absents: 2 },
     "6B": { pp: "Marie-Claire BRETTES", nom: "Senons", eleves: 28, statut: "returned", absents: 1 },
