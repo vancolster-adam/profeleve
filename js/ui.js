@@ -214,4 +214,4 @@ async function chargerAnalyse() {
     }
 }
 
-console.log("ui=version analyse 1");
+console.log("ui=version analyse 2");
