@@ -20,7 +20,7 @@
 .statut-evaluated { border-bottom: 3px solid #3b82f6; }
 .statut-grading { border-bottom: 3px solid #ff9800; }
 .statut-corrected { border-bottom: 3px solid #ffb300; }
-.statut-scored { border-bottom: 3px solid #8bc34a; }
+.statut-scored { border-bottom: 3px solid #ff9800; } /* Changé en Orange */
 .statut-returned { border-bottom: 3px solid #1db954; }
 
 /* =========================================
@@ -32,7 +32,14 @@
 .status-dot.evaluated { background-color: #3b82f6; font-size: 12px; }
 .status-dot.grading { background-color: #ff9800; color: #d32f2f; font-size: 14px; }
 .status-dot.corrected { background-color: #ffb300; font-size: 14px; }
-.status-dot.scored { background-color: #8bc34a; font-size: 14px; }
+
+/* Pastille Noté (Fond orange + Emoji 💯) */
+.status-dot.scored { 
+    background-color: #ff9800; 
+    font-size: 14px; 
+    color: white; /* pour que l'emoji ressorte bien */
+}
+
 .status-dot.returned { background-color: #1db954; font-size: 14px; }
 
 /* =========================================
@@ -46,8 +53,7 @@
 
 /* Couleurs des barres de gauche */
 .waiting-item.statut-grading { border-left-color: #ff9800; background-color: #3a3226; }
-.waiting-item.statut-corrected { border-left-color: #ffb300; background-color: #383427; }
-.waiting-item.statut-scored { border-left-color: #8bc34a; background-color: #2d3825; }
+.waiting-item.statut-scored { border-left-color: #ff9800; background-color: #3a3226; }
 .waiting-item.statut-evaluated { border-left-color: #3b82f6; background-color: #26323e; }
 
 .waiting-info { display: flex; flex-direction: column; }
