@@ -1,7 +1,7 @@
 const siteData = {
     "3A": { pp: "Fabrice LAFFARGUE", nom: "Hannah Arendt", eleves: 31, statut: "returned", absents: 2 },
     "3B": { pp: "Danièle ARTUR", nom: "Gisèle Halimi", eleves: 30, statut: "returned", absents: 2 },
-    "3C": { pp: "Janick LOGET", nom: "Romain Gary", eleves: 29, statut: "scored", absents: 2 },
+    "3C": { pp: "Janick LOGET", nom: "Romain Gary", eleves: 29, statut: "returned", absents: 1 },
     "3D": { pp: "Christophe BIOULAC", nom: "Srinivasa Ramanujan", eleves: 30, statut: "returned", absents: 2 },
     "4A": { pp: "Amandine ESSAFRI", nom: "Angela Davis", eleves: 26, statut: "returned", absents: 3 },
     "4B": { pp: "Florian GORGUES", nom: "Simone de Beauvoir", eleves: 25, statut: "returned", absents: 2 },
