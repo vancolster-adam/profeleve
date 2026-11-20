@@ -1,6 +1,6 @@
 const siteData = {
-    "3A": { nom: "Hannah Arendt", eleves: 31, statut: "returned", absents: 2 },
-    "3B": { nom: "Gisèle Halimi", eleves: 30, statut: "returned", absents: 2 },
+    "3A": { pp: "Fabrice LAFFARGUE", nom: "Hannah Arendt", eleves: 31, statut: "returned", absents: 2 },
+    "3B": { pp: "Danièle ARTUR", nom: "Gisèle Halimi", eleves: 30, statut: "returned", absents: 2 },
     "3C": { nom: "Romain Gary", eleves: 29, statut: "scored", absents: 2 },
     "3D": { nom: "Srinivasa Ramanujan", eleves: 30, statut: "returned", absents: 2 },
     "4A": { nom: "Angela Davis", eleves: 26, statut: "returned", absents: 3 },
@@ -16,6 +16,6 @@ const siteData = {
     "6A": { nom: "Arvernes", eleves: 0, statut: "returned", absents: 2 },
     "6B": { nom: "Senons", eleves: 28, statut: "returned", absents: 1 },
     "6C": { nom: "Carnutes", eleves: 24, statut: "evaluated", absents: 0 },
-    "6D": { nom: "Bituriges", eleves: 29, statut: "evaluated", absents: 0 },
+    "6D": { pp: "Arnaud COLLINET", nom: "Bituriges", eleves: 29, statut: "evaluated", absents: 0 },
     "6E": { pp: "Joël CLERGIOT", nom: "Parisii", eleves: 29, statut: "returned", absents: 0 }
 };
