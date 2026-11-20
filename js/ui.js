@@ -103,7 +103,7 @@ function creerElementAttente(classe) {
 // Fonction pour lire et afficher le fichier analyses.txt
 async function chargerAnalyse() {
     try {
-        const response = await fetch('analyses.txt');
+        const response = await fetch('data/analyses.txt');
         if (!response.ok) throw new Error("Fichier introuvable");
         const texte = await response.text();
         
