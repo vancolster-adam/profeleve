@@ -70,3 +70,5 @@ function animerNoms() {
         });
     }, 3000); // Toutes les 3 secondes
 }
+
+console.log("logic=version pp");
