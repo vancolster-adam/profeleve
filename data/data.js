@@ -15,8 +15,8 @@ const siteData = {
     "5E": { pp: "Marta MONTEMERLO", nom: "Marie Perrin", eleves: 29, statut: "returned", absents: 3 },
     "6A": { pp: "Nicolas BLANC", nom: "Arvernes", eleves: 27, statut: "returned", absents: 2 },
     "6B": { pp: "Marie-Claire BRETTES", nom: "Senons", eleves: 28, statut: "returned", absents: 1 },
-    "6C": { pp: "Stéphane GOTTFARSTEIN", nom: "Carnutes", eleves: 24, statut: "scored", absents: 2 },
-    "6D": { pp: "Arnaud COLLINET", nom: "Bituriges", eleves: 29, statut: "scored", absents: 5 },
+    "6C": { pp: "Stéphane GOTTFARSTEIN", nom: "Carnutes", eleves: 24, statut: "returned", absents: 2 },
+    "6D": { pp: "Arnaud COLLINET", nom: "Bituriges", eleves: 29, statut: "returned", absents: 5 },
     "6E": { pp: "Joël CLERGIOT", nom: "Parisii", eleves: 29, statut: "returned", absents: 0 }
 };
 
