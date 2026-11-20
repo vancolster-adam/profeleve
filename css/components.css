@@ -48,12 +48,12 @@
 /* =========================================
    BORDURES DE STATUTS
    ========================================= */
-.statut-not-evaluated { border-bottom: 3px solid #dc3545; }
-.statut-evaluated { border-bottom: 3px solid #3b82f6; }
-.statut-grading { border-bottom: 3px solid #ff9800; }
-.statut-corrected { border-bottom: 3px solid #ffb300; }
-.statut-scored { border-bottom: 3px solid #ff9800; }
-.statut-returned { border-bottom: 3px solid #1db954; }
+.statut-not-evaluated { border-bottom: 1px solid #dc3545; }
+.statut-evaluated { border-bottom: 1px solid #3b82f6; }
+.statut-grading { border-bottom: 1px solid #ff9800; }
+.statut-corrected { border-bottom: 1px solid #ffb300; }
+.statut-scored { border-bottom: 1px solid #ff9800; }
+.statut-returned { border-bottom: 1px solid #1db954; }
 
 /* =========================================
    PASTILLES DE STATUT (Ronds)
