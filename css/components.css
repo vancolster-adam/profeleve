@@ -1,4 +1,12 @@
 /* =========================================
+   BARRES DE DÉFILEMENT (SCROLLBARS) DISCÈTES
+   ========================================= */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #121212; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* =========================================
    DASHBOARD (Partie Droite)
    ========================================= */
 .dashboard-top { display: flex; flex-direction: column; }
@@ -11,11 +19,12 @@
 .class-box:hover { background-color: #282828; }
 .classe-titre { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
 
-/* Infos de classe */
-.classe-nom { font-size: 0.8rem; color: #b3b3b3; margin-top: 0.2rem; display: inline-flex; height: 1.2rem; overflow: hidden; align-items: center; justify-content: center; position: relative; }
+/* Correction pour que les noms longs ne soient plus coupés */
+.classe-nom { font-size: 0.75rem; color: #b3b3b3; margin-top: 0.2rem; display: inline-flex; min-height: 1.2rem; overflow: hidden; align-items: center; justify-content: center; position: relative; word-break: break-word; line-height: 1.1; }
 .nom-text { display: inline-block; transition: transform 0.4s ease, opacity 0.4s ease; }
 .nom-text.fade-out { transform: translateY(-100%); opacity: 0; }
 .nom-text.fade-in { transform: translateY(100%); opacity: 0; transition: none; }
+
 .classe-alerte { font-size: 0.75rem; color: #ff9800; margin-top: 0.3rem; font-weight: 600; }
 .classe-complet { font-size: 0.75rem; color: #1db954; margin-top: 0.3rem; font-weight: 600; }
 
@@ -41,25 +50,47 @@
 .waiting-info span { font-size: 0.85rem; color: #b3b3b3; }
 .waiting-status { font-size: 0.85rem; font-weight: 600; color: #b3b3b3; background: rgba(255, 255, 255, 0.05); padding: 0.4rem 0.8rem; border-radius: 20px; }
 
-
 /* =========================================
-   ANALYSE (Partie Gauche)
+   ANALYSE (Partie Gauche - UNIFIÉE)
    ========================================= */
-.analysis-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; margin-bottom: 1rem; }
-.analysis-header-text { flex: 1; word-break: break-word; }
-.analysis-cover { width: 120px; height: 120px; border-radius: 8px; object-fit: cover; border: 1px solid #444; flex-shrink: 0; }
+/* On supprime complètement l'ancien style pour tout mettre dans un format unique */
+.analysis-details { background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 0.8rem; overflow: hidden; }
 
-.analysis-block { background-color: #181818; border-radius: 8px; padding: 1rem; line-height: 1.6; font-size: 0.95rem; color: #d1d1d1; }
-
-.single-block { display: flex; align-items: center; gap: 1rem; padding: 0.5rem 1rem; background-color: transparent; border-left: 2px solid #1db954; font-style: italic; color: #b3b3b3; margin: 0; }
-.single-cover { width: 45px; height: 45px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
-
-.analysis-details { background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
-.analysis-details summary { padding: 1rem; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background-color: #282828; transition: background-color 0.2s; }
+.analysis-details summary { 
+    padding: 1rem; 
+    font-weight: 600; 
+    cursor: pointer; 
+    list-style: none; 
+    display: flex; 
+    align-items: center; 
+    gap: 1rem;
+    background-color: #282828; 
+    transition: background-color 0.2s; 
+    color: #fff;
+}
 .analysis-details summary:hover { background-color: #333; }
-.analysis-details summary::after { content: '+'; font-size: 1.2rem; color: #b3b3b3; }
+
+/* Petite flèche à droite */
+.analysis-details summary::after { content: '+'; font-size: 1.2rem; color: #b3b3b3; margin-left: auto; }
 .analysis-details[open] summary::after { content: '−'; }
-.analysis-details .details-content { padding: 1.5rem; background-color: #121212; line-height: 1.7; color: #d1d1d1; }
+
+/* Image unifiée dans le résumé */
+.summary-cover { 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 4px; 
+    object-fit: cover; 
+    flex-shrink: 0;
+}
+
+.analysis-details .details-content { 
+    padding: 1.5rem; 
+    background-color: #121212; 
+    line-height: 1.7; 
+    color: #d1d1d1; 
+    font-size: 0.95rem;
+    border-top: 1px solid #333;
+}
 
 /* =========================================
    RESPONSIVE
