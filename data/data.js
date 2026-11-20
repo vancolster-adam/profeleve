@@ -29,4 +29,4 @@ const siteData = {
    3. "grading"       : En cours de correction (Priorité 1 dans la liste d'attente).
    4. "corrected"     : Corrigé, notes non saisies (Disparaît de la liste d'attente).
    5. "scored"        : Notes saisies, prêt à rendre (Disparaît de la liste d'attente).
-   6. "returned"      : Devoir rendu aux élèves, terminé (Disparaît de la liste).
+   6. "returned"      : Devoir rendu aux élèves, terminé (Disparaît de la liste). */
