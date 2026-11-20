@@ -1,40 +1,27 @@
 // =========================================
 // FONCTIONS UTILITAIRES
 // =========================================
-
-// Sépare le statut de la date (ex: "evaluated_11/11/2026")
 function parseStatut(statutComplet) {
     if (!statutComplet) return { base: "", date: null };
     const parts = statutComplet.split('_');
-    return {
-        base: parts[0],
-        date: parts[1] || null
-    };
+    return { base: parts[0], date: parts[1] || null };
 }
 
-// Formate la date (ex: "11/11/2026" -> "mercredi 11 nov.")
 function formaterDate(dateStr) {
     if (!dateStr) return "";
     const parts = dateStr.split("/");
     if (parts.length !== 3) return dateStr;
-    
     const date = new Date(parts[2], parts[1] - 1, parts[0]);
     if (isNaN(date.getTime())) return dateStr;
-    
     const options = { weekday: 'long', day: 'numeric', month: 'short' };
-    let resultat = date.toLocaleDateString('fr-FR', options);
-    return resultat.replace(".", ""); // Enlève le point du "nov."
+    return date.toLocaleDateString('fr-FR', options).replace(".", "");
 }
 
-// Extrait l'image entre crochets [url] et renvoie le texte nettoyé
 function extraireImage(texte) {
     const regex = /\[(.*?)\]/;
     const match = texte.match(regex);
     if (match) {
-        return {
-            url: match[1],
-            texteSansUrl: texte.replace(regex, '').trim()
-        };
+        return { url: match[1], texteSansUrl: texte.replace(regex, '').trim() };
     }
     return { url: null, texteSansUrl: texte };
 }
@@ -42,11 +29,9 @@ function extraireImage(texte) {
 // =========================================
 // DASHBOARD (Partie Droite)
 // =========================================
-
 function creerElementClasse(nomClasse, data) {
     const div = document.createElement("div");
     div.className = "class-box";
-    
     const statutInfo = parseStatut(data.statut);
     div.classList.add(`statut-${statutInfo.base}`); 
 
@@ -78,24 +63,18 @@ function creerElementClasse(nomClasse, data) {
         ${data.absents === "inconnu" ? `<span class="classe-alerte">Abs: ?</span>` : ''}
         ${pastilleHTML}
     `;
-
     return div;
 }
 
 function creerElementAttente(classe) {
     const div = document.createElement("div");
     const statutInfo = parseStatut(classe.statut);
-    
     div.className = `waiting-item statut-${statutInfo.base}`; 
     
     let texteStatut = "";
-    if (statutInfo.base === "grading") {
-        texteStatut = "En cours de correction";
-    } else if (statutInfo.base === "evaluated") {
-        texteStatut = statutInfo.date ? `Correction estimée pour le ${formaterDate(statutInfo.date)}` : "En attente de correction";
-    } else if (statutInfo.base === "not-evaluated") {
-        texteStatut = statutInfo.date ? `Évaluation prévue le ${formaterDate(statutInfo.date)}` : "Non évalué";
-    }
+    if (statutInfo.base === "grading") texteStatut = "En cours de correction";
+    else if (statutInfo.base === "evaluated") texteStatut = statutInfo.date ? `Correction estimée pour le ${formaterDate(statutInfo.date)}` : "En attente de correction";
+    else if (statutInfo.base === "not-evaluated") texteStatut = statutInfo.date ? `Évaluation prévue le ${formaterDate(statutInfo.date)}` : "Non évalué";
 
     const nomAffichage = classe.nom || classe.pp || "Sans nom";
 
@@ -104,17 +83,14 @@ function creerElementAttente(classe) {
             <strong>${classe.nomClasse} - ${nomAffichage}</strong>
             <span>${classe.eleves > 0 ? classe.eleves + " élèves" : "Données inconnues"}</span>
         </div>
-        <div class="waiting-status">
-            ${texteStatut}
-        </div>
+        <div class="waiting-status">${texteStatut}</div>
     `;
     return div;
 }
 
 // =========================================
-// ANALYSE (Partie Gauche)
+// ANALYSE (Partie Gauche - Unifiée)
 // =========================================
-
 async function chargerAnalyse() {
     const container = document.getElementById('analysis-container');
     if (!container) return;
@@ -126,60 +102,42 @@ async function chargerAnalyse() {
         
         container.innerHTML = ''; 
         const lignes = texte.split('\n');
-        let currentContentDiv = null; // Stocke la div où écrire le texte actuel
+        let currentContentDiv = null; 
 
         lignes.forEach(ligne => {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // --- ALBUM ---
-            if (ligneNettoyee.startsWith('\\album:')) {
-                const contenu = ligneNettoyee.replace('\\album:', '').trim();
-                const { url, texteSansUrl } = extraireImage(contenu);
+            // Si la ligne commence par une barre oblique inversée (ex: \album:, \single:, \1:)
+            if (ligneNettoyee.startsWith('\\')) {
+                // On sépare le "type" (album, single, ou numéro) du reste du texte
+                const match = ligneNettoyee.match(/^\\(\w+|[0-9]+):?\s*(.*)/);
+                let titreBrut = ligneNettoyee;
                 
-                const header = document.createElement('div');
-                header.className = 'analysis-header';
-                let imgHTML = url ? `<img src="${url}" alt="Pochette" class="analysis-cover">` : '';
-                
-                header.innerHTML = `
-                    <div class="analysis-header-text">
-                        <h2>${texteSansUrl}</h2>
-                    </div>
-                    ${imgHTML}
-                `;
-                container.appendChild(header);
-                currentContentDiv = null; // On reset pour le texte qui suit
-                return;
-            }
+                if (match) {
+                    // On garde ce qu'il y a après les deux points (ou juste l'espace si pas de deux points)
+                    titreBrut = match[2] || ""; 
+                }
 
-            // --- SINGLES ---
-            if (ligneNettoyee.startsWith('\\single:')) {
-                const contenu = ligneNettoyee.replace('\\single:', '').trim();
-                const { url, texteSansUrl } = extraireImage(contenu);
+                const { url, texteSansUrl } = extraireImage(titreBrut);
                 
-                const div = document.createElement('div');
-                div.className = 'analysis-block single-block';
-                let imgHTML = url ? `<img src="${url}" alt="Cover" class="single-cover">` : '';
-                
-                div.innerHTML = `
-                    ${imgHTML}
-                    <span>${texteSansUrl}</span>
-                `;
-                container.appendChild(div);
-                currentContentDiv = null; // On reset
-                return;
-            }
-
-            // --- PISTES (Accordéons) ---
-            if (/^\\\d+/.test(ligneNettoyee)) {
-                const titrePiste = ligneNettoyee.replace(/^\\\d+/, '').replace(':', '').trim();
-                const numero = ligneNettoyee.match(/^\\\d+/)[0].replace('\\', '');
-                
+                // Création de l'accordéon unifié
                 const details = document.createElement('details');
                 details.className = 'analysis-details';
                 
                 const summary = document.createElement('summary');
-                summary.textContent = titrePiste ? `${numero} - ${titrePiste}` : `Piste ${numero}`;
+                
+                // S'il y a une image, on l'affiche dans le résumé
+                let imgHTML = url ? `<img src="${url}" alt="Cover" class="summary-cover">` : '';
+                
+                // On nettoie le titre pour enlever les numéros ou les mots-clés (ex: "1: ")
+                let titrePropre = ligneNettoyee.replace(/^\\\w+:?/, '').trim(); 
+                if (!titrePropre && !url) titrePropre = "Sans titre";
+
+                summary.innerHTML = `
+                    ${imgHTML}
+                    <span class="summary-title">${titrePropre}</span>
+                `;
                 
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'details-content';
@@ -193,10 +151,10 @@ async function chargerAnalyse() {
             }
 
             // --- TEXTE NORMAL ---
+            // Si ce n'est pas une balise, on l'ajoute au bloc déplié en cours
             if (currentContentDiv) {
                 currentContentDiv.innerHTML += ligneNettoyee + '<br>';
             } else {
-                // Texte libre (ex: sous l'album)
                 const p = document.createElement('p');
                 p.innerHTML = ligneNettoyee;
                 container.appendChild(p);
@@ -205,8 +163,8 @@ async function chargerAnalyse() {
 
     } catch (error) {
         console.error("Erreur d'analyse :", error);
-        container.innerHTML = `<p class="placeholder-text">Erreur : Impossible de charger l'analyse (data/analyses.txt introuvable).</p>`;
+        container.innerHTML = `<p class="placeholder-text">Erreur : Impossible de charger l'analyse.</p>`;
     }
 }
 
-console.log("ui=version analyse test 2");
+console.log("ui=version analyse test 3");
