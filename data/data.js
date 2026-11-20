@@ -9,7 +9,7 @@ const siteData = {
     "4D": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },    
     "4E": { nom: "George Eliot", eleves: 25, statut: "grading", absents: "inconnu" },
     "5A": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
-    "5B": { nom: "Blaise Pascal", eleves: 25, statut: "returned", absents: 0 },
+    "5B": { pp : "François-Xavier LEDOUX", nom: "Blaise Pascal", eleves: 25, statut: "returned", absents: 0 },
     "5C": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "5D": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "5E": { nom: "Marie Perrin", eleves: 29, statut: "returned", absents: 3 },
@@ -17,5 +17,5 @@ const siteData = {
     "6B": { nom: "Senons", eleves: 28, statut: "returned", absents: 1 },
     "6C": { nom: "Carnutes", eleves: 24, statut: "evaluated", absents: 0 },
     "6D": { nom: "Bituriges", eleves: 29, statut: "evaluated", absents: 0 },
-    "6E": { nom: "Parisii", eleves: 29, statut: "returned", absents: 0 }
+    "6E": { pp: "Joël CLERGIOT", nom: "Parisii", eleves: 29, statut: "returned", absents: 0 }
 };
