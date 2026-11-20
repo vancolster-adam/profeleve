@@ -14,8 +14,12 @@ function initialiserListeAttente() {
     const container = document.getElementById("liste-attente");
     container.innerHTML = ""; 
 
+    // 1. On filtre STRICTEMENT pour ne garder que ces 3 statuts
     const classesEnAttente = Object.entries(siteData)
-        .filter(([nom, data]) => data.statut !== "returned" && data.statut !== "corrected" && (data.nom !== "" || data.pp !== ""))
+        .filter(([nom, data]) => {
+            const statutsAutorises = ["grading", "evaluated", "not-evaluated"];
+            return statutsAutorises.includes(data.statut) && (data.nom !== "" || data.pp !== "");
+        })
         .map(([nom, data]) => ({ nomClasse: nom, ...data }));
 
     if (classesEnAttente.length === 0) {
@@ -23,15 +27,17 @@ function initialiserListeAttente() {
         return;
     }
 
+    // 2. On définit l'ordre : 1 en haut (grading), 3 en bas (not-evaluated)
     const priorite = {
         "grading": 1,
-        "scored": 2,
-        "evaluated": 3,
-        "not-evaluated": 4
+        "evaluated": 2,
+        "not-evaluated": 3
     };
 
+    // 3. On trie
     classesEnAttente.sort((a, b) => priorite[a.statut] - priorite[b.statut]);
 
+    // 4. On affiche
     classesEnAttente.forEach(classe => {
         container.appendChild(creerElementAttente(classe));
     });
@@ -47,15 +53,11 @@ function animerNoms() {
             const nomPP = parent.getAttribute('data-pp');
             const nomClasse = parent.getAttribute('data-nom');
             
-            // Si l'un des deux est vide, on n'anime pas (on laisse l'autre affiché)
             if (!nomPP || !nomClasse) return;
 
-            // 1. On lance l'animation de sortie (glisse vers le haut)
             el.classList.add('fade-out');
             
-            // 2. Après 400ms, on change le texte et on le fait entrer par le bas
             setTimeout(() => {
-                // Si on affiche actuellement le PP, on passe au Nom, et inversement
                 if (el.textContent.trim() === nomPP) {
                     el.textContent = nomClasse;
                 } else {
@@ -64,11 +66,11 @@ function animerNoms() {
                 
                 el.classList.remove('fade-out');
                 el.classList.add('fade-in');
-                void el.offsetWidth; // Force le navigateur à appliquer le style
+                void el.offsetWidth; 
                 el.classList.remove('fade-in');
-            }, 400); // Doit correspondre à la durée de transition CSS
+            }, 400);
         });
-    }, 3000); // Toutes les 3 secondes
+    }, 3000);
 }
 
-console.log("logic=version pp");
+console.log("logic=version waitinglist");
