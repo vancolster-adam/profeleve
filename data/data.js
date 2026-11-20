@@ -19,3 +19,14 @@ const siteData = {
     "6D": { pp: "Arnaud COLLINET", nom: "Bituriges", eleves: 29, statut: "evaluated", absents: 0 },
     "6E": { pp: "Joël CLERGIOT", nom: "Parisii", eleves: 29, statut: "returned", absents: 0 }
 };
+
+/* =========================================
+   RAPPEL DES STATUTS POSSIBLES :
+   =========================================
+   
+   1. "not-evaluated" : Devoir non évalué (rien n'est fait).
+   2. "evaluated"     : Devoir récupéré, en attente de correction.
+   3. "grading"       : En cours de correction (Priorité 1 dans la liste d'attente).
+   4. "corrected"     : Corrigé, notes non saisies (Disparaît de la liste d'attente).
+   5. "scored"        : Notes saisies, prêt à rendre (Disparaît de la liste d'attente).
+   6. "returned"      : Devoir rendu aux élèves, terminé (Disparaît de la liste).
