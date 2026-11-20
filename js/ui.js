@@ -20,10 +20,8 @@ function creerElementClasse(nomClasse, data) {
             pastilleHTML = `<div class="status-dot not-evaluated" title="Non évalué">✕</div>`; break;
     }
 
-    // Gestion de l'affichage alterné PP / Nom
     let sousTitreHTML = "";
     if (data.pp || data.nom) {
-        // On affiche le PP en premier, sinon le nom
         const texteInitial = data.pp || data.nom;
         sousTitreHTML = `
             <span class="classe-nom" data-pp="${data.pp || ''}" data-nom="${data.nom || ''}">
@@ -46,13 +44,13 @@ function creerElementAttente(classe) {
     const div = document.createElement("div");
     div.className = `waiting-item statut-${classe.statut}`; 
     
+    // On ne garde que les libellés des statuts qui s'affichent
     const libellesStatuts = {
         "evaluated": "En attente de correction",
         "grading": "En cours de correction",
-        "scored": "Noté (à rendre)"
+        "not-evaluated": "Non évalué"
     };
 
-    // Affichage dans la liste d'attente (on montre le nom, ou le PP si pas de nom)
     const nomAffichage = classe.nom || classe.pp || "Sans nom";
 
     div.innerHTML = `
@@ -66,4 +64,5 @@ function creerElementAttente(classe) {
     `;
     return div;
 }
-console.log("ui=version pp");
+
+console.log("ui=version waitinglist");
