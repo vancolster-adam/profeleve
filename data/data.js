@@ -5,7 +5,7 @@ const siteData = {
     "3D": { pp: "Christophe BIOULAC", nom: "Srinivasa Ramanujan", eleves: 30, statut: "returned", absents: 2 },
     "4A": { pp: "Amandine ESSAFRI", nom: "Angela Davis", eleves: 26, statut: "returned", absents: 3 },
     "4B": { pp: "Florian GORGUES", nom: "Simone de Beauvoir", eleves: 25, statut: "returned", absents: 2 },
-    "4C": { pp: "Véronique GOUDALLE", nom: "Andrée Chedid", eleves: 25, statut: "evaluated_20/11/2026", absents: "inconnu" },
+    "4C": { pp: "Véronique GOUDALLE", nom: "Andrée Chedid", eleves: 25, statut: "grading, absents: "inconnu" },
     "4D": { pp: "Yann HENRY", nom: "Olympe de Gouges", eleves: 26, statut: "returned", absents: 0 },    
     "4E": { pp: "Ioulia MASSADÉ", nom: "George Eliot", eleves: 25, statut: "scored_20/11/2026", absents: 3 },
     "5A": { pp: "Aïssa KERMEZLI", nom: "Jamie Edwards", eleves: 29, statut: "evaluated_23/11/2026", absents: 0 },
