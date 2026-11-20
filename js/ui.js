@@ -1,24 +1,23 @@
 function creerElementClasse(nomClasse, data) {
     const div = document.createElement("div");
     div.className = "class-box";
-    div.classList.add(`statut-${data.statut}`); // Ajoute la classe de bordure (ex: statut-rendu)
+    div.classList.add(`statut-${data.statut}`); 
 
-    // Attribution de la pastille selon le statut
     let pastilleHTML = "";
     switch (data.statut) {
-        case "rendu":
-            pastilleHTML = `<div class="status-dot rendu" title="Rendu">✓</div>`; break;
-        case "noté":
-            pastilleHTML = `<div class="status-dot note" title="Noté">✓</div>`; break;
-        case "corrigé":
-            pastilleHTML = `<div class="status-dot corrige" title="Corrigé">✓</div>`; break;
-        case "correction":
-            pastilleHTML = `<div class="status-dot correction" title="En cours">🖉</div>`; break;
-        case "évalué":
-            pastilleHTML = `<div class="status-dot evalue" title="Attente de correction">⌛</div>`; break;
-        case "non-evalué":
+        case "returned":
+            pastilleHTML = `<div class="status-dot returned" title="Rendu">✓</div>`; break;
+        case "scored":
+            pastilleHTML = `<div class="status-dot scored" title="Noté">✓</div>`; break;
+        case "corrected":
+            pastilleHTML = `<div class="status-dot corrected" title="Corrigé">✓</div>`; break;
+        case "grading":
+            pastilleHTML = `<div class="status-dot grading" title="En cours">🖉</div>`; break;
+        case "evaluated":
+            pastilleHTML = `<div class="status-dot evaluated" title="Attente de correction">⌛</div>`; break;
+        case "not-evaluated":
         default:
-            pastilleHTML = `<div class="status-dot non-evalue" title="Non évalué">✕</div>`; break;
+            pastilleHTML = `<div class="status-dot not-evaluated" title="Non évalué">✕</div>`; break;
     }
 
     div.innerHTML = `
@@ -33,15 +32,13 @@ function creerElementClasse(nomClasse, data) {
 
 function creerElementAttente(classe) {
     const div = document.createElement("div");
-    // Ajoute une classe spécifique au statut pour la couleur de la barre de gauche
     div.className = `waiting-item statut-${classe.statut}`; 
     
-    // Traduction des statuts pour l'affichage
     const libellesStatuts = {
-        "évalué": "En attente de correction",
-        "correction": "En cours de correction",
-        "corrigé": "Corrigé (notes à saisir)",
-        "noté": "Noté (à rendre)"
+        "evaluated": "En attente de correction",
+        "grading": "En cours de correction",
+        "corrected": "Corrigé (notes à saisir)",
+        "scored": "Noté (à rendre)"
     };
 
     div.innerHTML = `
