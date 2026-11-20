@@ -8,7 +8,7 @@ function creerElementClasse(nomClasse, data) {
         case "returned":
             pastilleHTML = `<div class="status-dot returned" title="Rendu">✓</div>`; break;
         case "scored":
-            pastilleHTML = `<div class="status-dot scored" title="Noté">💯</div>`; break; // U+1F4AF
+            pastilleHTML = `<div class="status-dot scored" title="Noté">💯</div>`; break;
         case "corrected":
             pastilleHTML = `<div class="status-dot corrected" title="Corrigé">✓</div>`; break;
         case "grading":
@@ -20,9 +20,21 @@ function creerElementClasse(nomClasse, data) {
             pastilleHTML = `<div class="status-dot not-evaluated" title="Non évalué">✕</div>`; break;
     }
 
+    // Gestion de l'affichage alterné PP / Nom
+    let sousTitreHTML = "";
+    if (data.pp || data.nom) {
+        // On affiche le PP en premier, sinon le nom
+        const texteInitial = data.pp || data.nom;
+        sousTitreHTML = `
+            <span class="classe-nom" data-pp="${data.pp || ''}" data-nom="${data.nom || ''}">
+                <span class="nom-text">${texteInitial}</span>
+            </span>
+        `;
+    }
+
     div.innerHTML = `
         <span class="classe-titre">${nomClasse}</span>
-        ${data.nom ? `<span class="classe-nom">${data.nom}</span>` : ''}
+        ${sousTitreHTML}
         ${data.absents > 0 || data.absents === "inconnu" ? `<span class="classe-alerte">${data.absents === "inconnu" ? "Abs: ?" : data.absents + " abs."}</span>` : ''}
         ${pastilleHTML}
     `;
@@ -34,16 +46,18 @@ function creerElementAttente(classe) {
     const div = document.createElement("div");
     div.className = `waiting-item statut-${classe.statut}`; 
     
-    // On retire "corrected" de ce dictionnaire
     const libellesStatuts = {
         "evaluated": "En attente de correction",
         "grading": "En cours de correction",
         "scored": "Noté (à rendre)"
     };
 
+    // Affichage dans la liste d'attente (on montre le nom, ou le PP si pas de nom)
+    const nomAffichage = classe.nom || classe.pp || "Sans nom";
+
     div.innerHTML = `
         <div class="waiting-info">
-            <strong>${classe.nomClasse} - ${classe.nom || "Sans nom"}</strong>
+            <strong>${classe.nomClasse} - ${nomAffichage}</strong>
             <span>${classe.eleves > 0 ? classe.eleves + " élèves" : "Données inconnues"}</span>
         </div>
         <div class="waiting-status">
