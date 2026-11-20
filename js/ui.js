@@ -100,4 +100,118 @@ function creerElementAttente(classe) {
     return div;
 }
 
-console.log("ui=version no-absents");
+// Fonction pour lire et afficher le fichier analyses.txt
+async function chargerAnalyse() {
+    try {
+        const response = await fetch('analyses.txt');
+        if (!response.ok) throw new Error("Fichier introuvable");
+        const texte = await response.text();
+        
+        const container = document.getElementById('analysis-container');
+        container.innerHTML = ''; // On vide le "Chargement..."
+
+        // 1. On sépare le texte en lignes
+        const lignes = texte.split('\n');
+        
+        let currentDetails = null; // L'accordéon actuellement ouvert
+        let currentContentDiv = null;
+
+        // Variables pour la pochette
+        let coverUrl = "https://via.placeholder.com/120?text=Pochette"; 
+        let headerCreated = false;
+
+        // On parcourt chaque ligne dans l'ordre exact du document
+        lignes.forEach(ligne => {
+            const ligneNettoyee = ligne.trim();
+            if (!ligneNettoyee) return;
+
+            // --- GESTION DE LA POCHETTE ---
+            if (ligneNettoyee.startsWith('\\cover:')) {
+                coverUrl = ligneNettoyee.replace('\\cover:', '').trim();
+                return;
+            }
+
+            // --- GESTION DU TITRE D'ALBUM ---
+            if (ligneNettoyee.startsWith('\\album:')) {
+                const titreAlbum = ligneNettoyee.replace('\\album:', '').trim();
+                
+                // On crée l'en-tête avec la pochette
+                const header = document.createElement('div');
+                header.className = 'analysis-header';
+                header.innerHTML = `
+                    <div class="analysis-header-text">
+                        <h2>${titreAlbum}</h2>
+                    </div>
+                    <img src="${coverUrl}" alt="Pochette" class="analysis-cover">
+                `;
+                container.appendChild(header);
+                headerCreated = true;
+                return;
+            }
+
+            // --- GESTION DES SINGLES (Texte simple) ---
+            if (ligneNettoyee.startsWith('\\single:')) {
+                const texteSingle = ligneNettoyee.replace('\\single:', '').trim();
+                const div = document.createElement('div');
+                div.className = 'analysis-block single-block';
+                div.innerHTML = texteSingle;
+                container.appendChild(div);
+                return;
+            }
+
+            // --- GESTION DES PISTES (Accordéons) ---
+            // Si la ligne commence par \1, \2, \3... (sans "single:")
+            if (/^\\\d+/.test(ligneNettoyee)) {
+                const titrePiste = ligneNettoyee.replace(/^\\\d+/, '').replace(':', '').trim();
+                const numero = ligneNettoyee.match(/^\\\d+/)[0].replace('\\', '');
+                
+                const details = document.createElement('details');
+                details.className = 'analysis-details';
+                
+                const summary = document.createElement('summary');
+                // Si le titre est vide, on affiche juste "Piste X"
+                summary.textContent = titrePiste ? `${numero} - ${titrePiste}` : `Piste ${numero}`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'details-content';
+                
+                details.appendChild(summary);
+                details.appendChild(contentDiv);
+                container.appendChild(details);
+                
+                currentDetails = details;
+                currentContentDiv = contentDiv;
+                return;
+            }
+
+            // --- TEXTE NORMAL ---
+            // Si ce n'est pas une balise, on l'ajoute au bloc en cours
+            if (currentContentDiv) {
+                // On ajoute le texte avec innerHTML pour que tes <br> fonctionnent
+                currentContentDiv.innerHTML += ligneNettoyee + '<br>';
+            } else {
+                // Si on est avant toute balise, on le met dans un bloc par défaut
+                const p = document.createElement('p');
+                p.innerHTML = ligneNettoyee;
+                container.appendChild(p);
+            }
+        });
+
+        // Si aucune pochette n'a été trouvée, on met une image par défaut sur le premier header
+        if (!headerCreated) {
+            const header = document.createElement('div');
+            header.className = 'analysis-header';
+            header.innerHTML = `
+                <div class="analysis-header-text"><h2>Analyse</h2></div>
+                <img src="${coverUrl}" alt="Pochette" class="analysis-cover">
+            `;
+            container.prepend(header);
+        }
+
+    } catch (error) {
+        console.error("Erreur de chargement de l'analyse :", error);
+        document.getElementById('analysis-container').innerHTML = `<p class="placeholder-text">Impossible de charger l'analyse. Vérifie que le fichier analyses.txt est bien présent.</p>`;
+    }
+}
+
+console.log("ui=version analyse 1");
