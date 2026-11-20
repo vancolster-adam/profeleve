@@ -44,6 +44,12 @@
 }
 
 .classe-alerte { font-size: 0.75rem; color: #ff9800; margin-top: 0.3rem; font-weight: 600; }
+.classe-complet {
+    font-size: 0.75rem;
+    color: #1db954; /* Le même vert que le statut "rendu" */
+    margin-top: 0.3rem;
+    font-weight: 600;
+}
 
 /* =========================================
    BORDURES DE STATUTS
