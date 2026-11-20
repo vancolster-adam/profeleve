@@ -55,7 +55,9 @@ function creerElementClasse(nomClasse, data) {
     div.innerHTML = `
         <span class="classe-titre">${nomClasse}</span>
         ${sousTitreHTML}
-        ${data.absents > 0 || data.absents === "inconnu" ? `<span class="classe-alerte">${data.absents === "inconnu" ? "Abs: ?" : data.absents + " abs."}</span>` : ''}
+        ${data.absents === 0 ? `<span class="classe-complet">Complet</span>` : ''}
+        ${data.absents > 0 ? `<span class="classe-alerte">${data.absents} abs.</span>` : ''}
+        ${data.absents === "inconnu" ? `<span class="classe-alerte">Abs: ?</span>` : ''}
         ${pastilleHTML}
     `;
 
@@ -98,4 +100,4 @@ function creerElementAttente(classe) {
     return div;
 }
 
-console.log("ui=version nextstep");
+console.log("ui=version no-absents");
