@@ -10,15 +10,28 @@ function initialiserGrille() {
     }
 }
 
+// Fonction qui attribue une priorité selon TES règles
+function getPriorite(statutComplet) {
+    if (statutComplet.startsWith("grading")) return 1; // En cours (priorité absolue)
+    if (statutComplet.startsWith("evaluated")) {
+        return statutComplet.includes("_") ? 2 : 3; // Évalué avec date (2) > Évalué sans date (3)
+    }
+    if (statutComplet.startsWith("not-evaluated")) {
+        return statutComplet.includes("_") ? 4 : 5; // Non évalué avec date (4) > Non évalué sans date (5)
+    }
+    return 6; // Au cas où
+}
+
 function initialiserListeAttente() {
     const container = document.getElementById("liste-attente");
     container.innerHTML = ""; 
 
-    // 1. On filtre STRICTEMENT pour ne garder que ces 3 statuts
     const classesEnAttente = Object.entries(siteData)
         .filter(([nom, data]) => {
+            // On garde uniquement les bases autorisées dans la liste
+            const statutBase = data.statut.split('_')[0];
             const statutsAutorises = ["grading", "evaluated", "not-evaluated"];
-            return statutsAutorises.includes(data.statut) && (data.nom !== "" || data.pp !== "");
+            return statutsAutorises.includes(statutBase) && (data.nom !== "" || data.pp !== "");
         })
         .map(([nom, data]) => ({ nomClasse: nom, ...data }));
 
@@ -27,42 +40,30 @@ function initialiserListeAttente() {
         return;
     }
 
-    // 2. On définit l'ordre : 1 en haut (grading), 3 en bas (not-evaluated)
-    const priorite = {
-        "grading": 1,
-        "evaluated": 2,
-        "not-evaluated": 3
-    };
+    // Tri basé sur notre fonction getPriorite
+    classesEnAttente.sort((a, b) => {
+        return getPriorite(a.statut) - getPriorite(b.statut);
+    });
 
-    // 3. On trie
-    classesEnAttente.sort((a, b) => priorite[a.statut] - priorite[b.statut]);
-
-    // 4. On affiche
     classesEnAttente.forEach(classe => {
         container.appendChild(creerElementAttente(classe));
     });
 }
 
-// Animation de bascule entre le PP et le Nom de la classe
+// On garde la fonction d'animation intacte
 function animerNoms() {
     setInterval(() => {
         const nomTexts = document.querySelectorAll('.nom-text');
-        
         nomTexts.forEach(el => {
             const parent = el.closest('.classe-nom');
             const nomPP = parent.getAttribute('data-pp');
             const nomClasse = parent.getAttribute('data-nom');
-            
             if (!nomPP || !nomClasse) return;
 
             el.classList.add('fade-out');
-            
             setTimeout(() => {
-                if (el.textContent.trim() === nomPP) {
-                    el.textContent = nomClasse;
-                } else {
-                    el.textContent = nomPP;
-                }
+                if (el.textContent.trim() === nomPP) el.textContent = nomClasse;
+                else el.textContent = nomPP;
                 
                 el.classList.remove('fade-out');
                 el.classList.add('fade-in');
@@ -73,4 +74,4 @@ function animerNoms() {
     }, 3000);
 }
 
-console.log("logic=version waitinglist");
+console.log("logic=version nextstp");
