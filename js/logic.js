@@ -14,9 +14,9 @@ function initialiserListeAttente() {
     const container = document.getElementById("liste-attente");
     container.innerHTML = ""; 
 
-    // On exclut seulement les classes "returned" et celles vides
+    // On exclut "returned" ET "corrected"
     const classesEnAttente = Object.entries(siteData)
-        .filter(([nom, data]) => data.statut !== "returned" && data.nom !== "")
+        .filter(([nom, data]) => data.statut !== "returned" && data.statut !== "corrected" && data.nom !== "")
         .map(([nom, data]) => ({ nomClasse: nom, ...data }));
 
     if (classesEnAttente.length === 0) {
@@ -24,13 +24,12 @@ function initialiserListeAttente() {
         return;
     }
 
-    // Le dictionnaire de priorité utilise les nouveaux termes
+    // On retire "corrected" du dictionnaire de priorité puisqu'il n'apparaîtra plus
     const priorite = {
         "grading": 1,
-        "corrected": 2,
-        "scored": 3,
-        "evaluated": 4,
-        "not-evaluated": 5
+        "scored": 2,
+        "evaluated": 3,
+        "not-evaluated": 4
     };
 
     classesEnAttente.sort((a, b) => priorite[a.statut] - priorite[b.statut]);
