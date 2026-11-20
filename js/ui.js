@@ -1,23 +1,24 @@
 function creerElementClasse(nomClasse, data) {
     const div = document.createElement("div");
     div.className = "class-box";
-    
-    // Ajout de la classe de bordure selon le statut
-    if (data.statut === "corrigé") div.classList.add("statut-corrige");
-    else if (data.statut === "en-cours") div.classList.add("statut-en-cours");
-    else if (data.statut === "corrige-non-rendu") div.classList.add("statut-corrige-non-rendu");
-    else div.classList.add("statut-attente");
+    div.classList.add(`statut-${data.statut}`); // Ajoute la classe de bordure (ex: statut-rendu)
 
-    // Génération de la pastille selon le statut
+    // Attribution de la pastille selon le statut
     let pastilleHTML = "";
-    if (data.statut === "corrigé") {
-        pastilleHTML = `<div class="status-dot done" title="Terminé">✓</div>`;
-    } else if (data.statut === "en-cours") {
-        pastilleHTML = `<div class="status-dot en-cours" title="En cours">🖉</div>`;
-    } else if (data.statut === "corrige-non-rendu") {
-        pastilleHTML = `<div class="status-dot corrige-non-rendu" title="Corrigé, non rendu">✓</div>`;
-    } else {
-        pastilleHTML = `<div class="status-dot attente" title="En attente">✕</div>`;
+    switch (data.statut) {
+        case "rendu":
+            pastilleHTML = `<div class="status-dot rendu" title="Rendu">✓</div>`; break;
+        case "noté":
+            pastilleHTML = `<div class="status-dot note" title="Noté">✓</div>`; break;
+        case "corrigé":
+            pastilleHTML = `<div class="status-dot corrige" title="Corrigé">✓</div>`; break;
+        case "correction":
+            pastilleHTML = `<div class="status-dot correction" title="En cours">🖉</div>`; break;
+        case "évalué":
+            pastilleHTML = `<div class="status-dot evalue" title="Attente de correction">⌛</div>`; break;
+        case "non-evalué":
+        default:
+            pastilleHTML = `<div class="status-dot non-evalue" title="Non évalué">✕</div>`; break;
     }
 
     div.innerHTML = `
@@ -32,13 +33,16 @@ function creerElementClasse(nomClasse, data) {
 
 function creerElementAttente(classe) {
     const div = document.createElement("div");
-    div.className = "waiting-item";
-    if (classe.statut === "en-cours") div.classList.add("waiting-en-cours");
+    // Ajoute une classe spécifique au statut pour la couleur de la barre de gauche
+    div.className = `waiting-item statut-${classe.statut}`; 
     
-    // On gère l'affichage du texte dans la liste d'attente
-    let texteStatut = "En attente";
-    if (classe.statut === "en-cours") texteStatut = "En cours de correction";
-    if (classe.statut === "corrige-non-rendu") texteStatut = "Corrigé (à rendre)";
+    // Traduction des statuts pour l'affichage
+    const libellesStatuts = {
+        "évalué": "En attente de correction",
+        "correction": "En cours de correction",
+        "corrigé": "Corrigé (notes à saisir)",
+        "noté": "Noté (à rendre)"
+    };
 
     div.innerHTML = `
         <div class="waiting-info">
@@ -46,7 +50,7 @@ function creerElementAttente(classe) {
             <span>${classe.eleves > 0 ? classe.eleves + " élèves" : "Données inconnues"}</span>
         </div>
         <div class="waiting-status">
-            ${texteStatut}
+            ${libellesStatuts[classe.statut] || classe.statut}
         </div>
     `;
     return div;
