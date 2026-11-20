@@ -13,7 +13,7 @@ const siteData = {
     "5C": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "5D": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "5E": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
-    "6A": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
+    "6A": { nom: "Arvernes", eleves: 0, statut: "returned", absents: 2 },
     "6B": { nom: "Senons", eleves: 28, statut: "returned", absents: 1 },
     "6C": { nom: "Carnutes", eleves: 24, statut: "evaluated", absents: 0 },
     "6D": { nom: "Bituriges", eleves: 29, statut: "evaluated", absents: 0 },
