@@ -3,3 +3,5 @@ document.addEventListener("DOMContentLoaded", () => {
     initialiserListeAttente();
     animerNoms();
 });
+
+console.log("main=version pp");
