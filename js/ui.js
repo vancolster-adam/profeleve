@@ -66,3 +66,4 @@ function creerElementAttente(classe) {
     `;
     return div;
 }
+console.log("ui=version pp");
