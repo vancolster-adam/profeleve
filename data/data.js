@@ -1,8 +1,8 @@
 const siteData = {
-    "3A": { nom: "Hannah Arendt", eleves: 31, statut: "corrigé", absents: 2 },
-    "3B": { nom: "Gisèle Halimi", eleves: 30, statut: "en-cours", absents: 2 },
-    "3C": { nom: "Romain Gary", eleves: 29, statut: "corrige-non-rendu", absents: 2 },
-    "3D": { nom: "Srinivasa Ramanujan", eleves: 30, statut: "en-cours", absents: 2 },
+    "3A": { nom: "Hannah Arendt", eleves: 31, statut: "rendu", absents: 2 },
+    "3B": { nom: "Gisèle Halimi", eleves: 30, statut: "rendu", absents: 2 },
+    "3C": { nom: "Romain Gary", eleves: 29, statut: "noté", absents: 2 },
+    "3D": { nom: "Srinivasa Ramanujan", eleves: 30, statut: "rendu", absents: 2 },
     "4A": { nom: "", eleves: 0, statut: "attente", absents: 0 },
     "4B": { nom: "", eleves: 0, statut: "attente", absents: 0 },
     "4C": { nom: "", eleves: 0, statut: "attente", absents: 0 },
