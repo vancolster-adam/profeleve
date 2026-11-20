@@ -17,5 +17,5 @@ const siteData = {
     "6B": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "6C": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
     "6D": { nom: "", eleves: 0, statut: "evaluated", absents: 0 },
-    "6E": { nom: "", eleves: 0, statut: "returned", absents: 0 }
+    "6E": { nom: "Parisii", eleves: 29, statut: "returned", absents: 0 }
 };
