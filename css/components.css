@@ -11,10 +11,9 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem 0;
-    border-bottom: 1px solid #333; /* Délimitation de la rangée */
+    border-bottom: 1px solid #333;
 }
 
-/* On enlève la bordure de la toute dernière rangée */
 .class-row:last-child {
     border-bottom: none;
 }
@@ -28,7 +27,7 @@
 
 .class-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 colonnes */
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     flex-grow: 1;
 }
@@ -47,38 +46,25 @@
 }
 
 .class-box:hover {
-    background-color: #282828; /* Léger fond au survol */
+    background-color: #282828;
 }
 
-.classe-titre {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.classe-nom {
-    font-size: 0.8rem;
-    color: #b3b3b3;
-    margin-top: 0.2rem;
-}
-
-.classe-alerte {
-    font-size: 0.75rem;
-    color: #ff9800;
-    margin-top: 0.3rem;
-    font-weight: 600;
-}
+.classe-titre { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
+.classe-nom { font-size: 0.8rem; color: #b3b3b3; margin-top: 0.2rem; }
+.classe-alerte { font-size: 0.75rem; color: #ff9800; margin-top: 0.3rem; font-weight: 600; }
 
 /* =========================================
-   STATUTS (Bordures de couleurs en bas)
+   BORDURES DE STATUTS (Ligne colorée en bas)
    ========================================= */
-.statut-corrige { border-bottom: 3px solid #1db954; } /* Vert */
-.statut-en-cours { border-bottom: 3px solid #ff9800; } /* Orange */
-.statut-corrige-non-rendu { border-bottom: 3px solid #ff9800; } /* Orange */
-.statut-attente { border-bottom: 3px solid #dc3545; } /* Rouge */
+.statut-non-evalué { border-bottom: 3px solid #dc3545; } /* Rouge */
+.statut-évalué { border-bottom: 3px solid #3b82f6; }     /* Bleu */
+.statut-correction { border-bottom: 3px solid #ff9800; } /* Orange */
+.statut-corrigé { border-bottom: 3px solid #ffb300; }    /* Jaune/Or */
+.statut-noté { border-bottom: 3px solid #8bc34a; }       /* Vert clair */
+.statut-rendu { border-bottom: 3px solid #1db954; }      /* Vert foncé */
 
 /* =========================================
-   PASTILLES DE STATUT (Ronds avec icônes)
+   PASTILLES DE STATUT (Ronds)
    ========================================= */
 .status-dot {
     width: 22px;
@@ -88,33 +74,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
     font-weight: bold;
     color: white;
 }
 
-/* Terminé : Fond Vert / Coche blanche */
-.status-dot.done {
-    background-color: #1db954;
-}
+/* 1. Non évalué (Rouge / X) */
+.status-dot.non-evalue { background-color: #dc3545; font-size: 14px; }
 
-/* En cours : Fond Orange / Crayon rouge */
-.status-dot.en-cours {
-    background-color: #ff9800;
-    color: #d32f2f; /* Rouge */
-    font-size: 14px;
-}
+/* 2. Évalué (Bleu / Sablier) */
+.status-dot.evalue { background-color: #3b82f6; font-size: 12px; }
 
-/* En attente / Inconnu : Fond Rouge / Croix blanche */
-.status-dot.attente {
-    background-color: #dc3545;
-    font-size: 14px;
-}
+/* 3. En correction (Orange / Crayon rouge) */
+.status-dot.correction { background-color: #ff9800; color: #d32f2f; font-size: 14px; }
 
-/* Corrigé non rendu : Fond Orange / Coche blanche */
-.status-dot.corrige-non-rendu {
-    background-color: #ff9800;
-}
+/* 4. Corrigé (Jaune / Check blanc) */
+.status-dot.corrige { background-color: #ffb300; font-size: 14px; }
+
+/* 5. Noté (Vert clair / Check blanc) */
+.status-dot.note { background-color: #8bc34a; font-size: 14px; }
+
+/* 6. Rendu (Vert foncé / Check blanc) */
+.status-dot.rendu { background-color: #1db954; font-size: 14px; }
+
 
 /* =========================================
    BAS : LISTE D'ATTENTE
@@ -140,11 +121,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-    align-items: stretch;
-    justify-content: flex-start;
 }
 
-/* --- ÉLÉMENT DE LA LISTE D'ATTENTE --- */
 .waiting-item {
     background-color: #333;
     border-radius: 8px;
@@ -155,31 +133,21 @@
     border-left: 4px solid #555;
 }
 
-.waiting-en-cours {
-    border-left-color: #ff9800;
-    background-color: #3a3226; /* Teinte orangée */
-}
+/* Couleurs des barres de gauche dans la liste d'attente selon le statut */
+.waiting-item.statut-correction { border-left-color: #ff9800; background-color: #3a3226; }
+.waiting-item.statut-corrigé { border-left-color: #ffb300; background-color: #383427; }
+.waiting-item.statut-noté { border-left-color: #8bc34a; background-color: #2d3825; }
+.waiting-item.statut-évalué { border-left-color: #3b82f6; background-color: #26323e; }
 
-.waiting-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.waiting-info strong {
-    font-size: 1rem;
-    color: #fff;
-}
-
-.waiting-info span {
-    font-size: 0.85rem;
-    color: #b3b3b3;
-}
+.waiting-info { display: flex; flex-direction: column; }
+.waiting-info strong { font-size: 1rem; color: #fff; }
+.waiting-info span { font-size: 0.85rem; color: #b3b3b3; }
 
 .waiting-status {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #ff9800;
-    background: rgba(255, 152, 0, 0.1);
+    color: #b3b3b3;
+    background: rgba(255, 255, 255, 0.05);
     padding: 0.4rem 0.8rem;
     border-radius: 20px;
 }
@@ -188,26 +156,8 @@
    RESPONSIVE (Mobile)
    ========================================= */
 @media (max-width: 768px) {
-    .class-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    
-    .class-row h3 {
-        text-align: left;
-        width: auto;
-    }
-    
-    /* Sur mobile, on passe à 2 colonnes pour que ça respire */
-    .class-grid {
-        grid-template-columns: repeat(2, 1fr);
-        width: 100%;
-    }
-
-    .waiting-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
-    }
+    .class-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .class-row h3 { text-align: left; width: auto; }
+    .class-grid { grid-template-columns: repeat(2, 1fr); width: 100%; }
+    .waiting-item { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
 }
