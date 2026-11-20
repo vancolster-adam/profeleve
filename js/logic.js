@@ -14,9 +14,9 @@ function initialiserListeAttente() {
     const container = document.getElementById("liste-attente");
     container.innerHTML = ""; 
 
-    // 1. On garde tout sauf les classes "rendu" et celles qui n'ont pas de nom
+    // On exclut seulement les classes "returned" et celles vides
     const classesEnAttente = Object.entries(siteData)
-        .filter(([nom, data]) => data.statut !== "rendu" && data.nom !== "")
+        .filter(([nom, data]) => data.statut !== "returned" && data.nom !== "")
         .map(([nom, data]) => ({ nomClasse: nom, ...data }));
 
     if (classesEnAttente.length === 0) {
@@ -24,19 +24,17 @@ function initialiserListeAttente() {
         return;
     }
 
-    // 2. Système de priorité pour le tri
+    // Le dictionnaire de priorité utilise les nouveaux termes
     const priorite = {
-        "correction": 1, // En cours
-        "corrigé": 2,    // Prêt à noter
-        "noté": 3,       // Prêt à rendre
-        "évalué": 4,     // En attente de correction
-        "non-evalué": 5  // Pas encore évalué
+        "grading": 1,
+        "corrected": 2,
+        "scored": 3,
+        "evaluated": 4,
+        "not-evaluated": 5
     };
 
-    // 3. On trie selon ce système de priorité
     classesEnAttente.sort((a, b) => priorite[a.statut] - priorite[b.statut]);
 
-    // 4. On affiche
     classesEnAttente.forEach(classe => {
         container.appendChild(creerElementAttente(classe));
     });
