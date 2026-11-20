@@ -10,7 +10,39 @@
 .class-box { padding: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: all 0.2s ease; border-radius: 8px; }
 .class-box:hover { background-color: #282828; }
 .classe-titre { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
-.classe-nom { font-size: 0.8rem; color: #b3b3b3; margin-top: 0.2rem; }
+
+/* NOUVEAU : Conteneur de l'animation */
+.classe-nom {
+    font-size: 0.8rem;
+    color: #b3b3b3;
+    margin-top: 0.2rem;
+    display: inline-flex;
+    height: 1.2rem; /* Empêche la boîte de sauter pendant l'animation */
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Le texte qui bouge */
+.nom-text {
+    display: inline-block;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* État de sortie (glisse vers le haut et disparaît) */
+.nom-text.fade-out {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+/* État d'entrée (prêt en bas, invisible, sans transition) */
+.nom-text.fade-in {
+    transform: translateY(100%);
+    opacity: 0;
+    transition: none;
+}
+
 .classe-alerte { font-size: 0.75rem; color: #ff9800; margin-top: 0.3rem; font-weight: 600; }
 
 /* =========================================
@@ -20,26 +52,18 @@
 .statut-evaluated { border-bottom: 3px solid #3b82f6; }
 .statut-grading { border-bottom: 3px solid #ff9800; }
 .statut-corrected { border-bottom: 3px solid #ffb300; }
-.statut-scored { border-bottom: 3px solid #ff9800; } /* Changé en Orange */
+.statut-scored { border-bottom: 3px solid #ff9800; }
 .statut-returned { border-bottom: 3px solid #1db954; }
 
 /* =========================================
    PASTILLES DE STATUT (Ronds)
    ========================================= */
 .status-dot { width: 22px; height: 22px; border-radius: 50%; margin-top: 0.6rem; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; }
-
 .status-dot.not-evaluated { background-color: #dc3545; font-size: 14px; }
 .status-dot.evaluated { background-color: #3b82f6; font-size: 12px; }
 .status-dot.grading { background-color: #ff9800; color: #d32f2f; font-size: 14px; }
 .status-dot.corrected { background-color: #ffb300; font-size: 14px; }
-
-/* Pastille Noté (Fond orange + Emoji 💯) */
-.status-dot.scored { 
-    background-color: #ff9800; 
-    font-size: 14px; 
-    color: white; /* pour que l'emoji ressorte bien */
-}
-
+.status-dot.scored { background-color: #ff9800; font-size: 14px; color: white; }
 .status-dot.returned { background-color: #1db954; font-size: 14px; }
 
 /* =========================================
@@ -48,14 +72,10 @@
 .dashboard-bottom { flex-grow: 1; background-color: #282828; border-radius: 8px; padding: 1.5rem; display: flex; flex-direction: column; }
 .dashboard-bottom h2 { font-size: 1.1rem; margin-bottom: 1rem; color: #b3b3b3; text-transform: uppercase; letter-spacing: 1px; }
 .waiting-list-content { display: flex; flex-direction: column; gap: 0.8rem; }
-
 .waiting-item { background-color: #333; border-radius: 8px; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #555; }
-
-/* Couleurs des barres de gauche */
 .waiting-item.statut-grading { border-left-color: #ff9800; background-color: #3a3226; }
 .waiting-item.statut-scored { border-left-color: #ff9800; background-color: #3a3226; }
 .waiting-item.statut-evaluated { border-left-color: #3b82f6; background-color: #26323e; }
-
 .waiting-info { display: flex; flex-direction: column; }
 .waiting-info strong { font-size: 1rem; color: #fff; }
 .waiting-info span { font-size: 0.85rem; color: #b3b3b3; }
