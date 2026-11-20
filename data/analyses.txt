@@ -31,6 +31,6 @@ You Will Find Moonlit Nights - Dangerously Yours (12:50)
 \4
 
 \5
-\single : [https://cdn-images.dzcdn.net/images/cover/3d1246b483aefa9bd0bcd07dfc926be8/1900x1900-000000-80-0-0.jpg] The Strokes - Reptilia
-\single : [http://cdn-images.dzcdn.net/images/cover/6a36f36af55e1af64a149f8f4e67cd06/0x1900-000000-80-0-0.jpg] Christophe Maé - J'ai laissé
-\single : [https://cdn-images.dzcdn.net/images/cover/6799769287ffd21571f23459f71e8e1e/0x1900-000000-80-0-0.jpg] TLC - No Scrubs (1999)
+\single: [https://cdn-images.dzcdn.net/images/cover/3d1246b483aefa9bd0bcd07dfc926be8/1900x1900-000000-80-0-0.jpg] The Strokes - Reptilia
+\single: [http://cdn-images.dzcdn.net/images/cover/6a36f36af55e1af64a149f8f4e67cd06/0x1900-000000-80-0-0.jpg] Christophe Maé - J'ai laissé
+\single: [https://cdn-images.dzcdn.net/images/cover/6799769287ffd21571f23459f71e8e1e/0x1900-000000-80-0-0.jpg] TLC - No Scrubs (1999)
