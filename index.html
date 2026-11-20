@@ -14,7 +14,8 @@
         <!-- PARTIE GAUCHE : Analyse -->
         <section class="analysis-panel">
             <h1 class="section-title">Vos propositions d'écoutes - Commentaires et Analyses</h1>
-            <!-- NOUVEAU : La zone scrollable -->
+            
+            <!-- Zone scrollable de gauche -->
             <div class="panel-content">
                 <div class="analysis-container" id="analysis-container">
                     <p class="placeholder-text">Chargement de l'analyse...</p>
@@ -25,30 +26,36 @@
         <!-- PARTIE DROITE : Tableau de bord -->
         <section class="dashboard-panel">
             <h1 class="section-title">État des corrections</h1>
-            <!-- NOUVEAU : La zone scrollable -->
+            
+            <!-- Zone scrollable de droite -->
             <div class="panel-content">
+                
+                <!-- Bloc du haut : Grille des classes -->
                 <div class="dashboard-top">
-                <div class="class-row">
-                    <h3>3e</h3>
-                    <div class="class-grid" id="grid-3e"></div>
+                    <div class="class-row">
+                        <h3>3e</h3>
+                        <div class="class-grid" id="grid-3e"></div>
+                    </div>
+                    <div class="class-row">
+                        <h3>4e</h3>
+                        <div class="class-grid" id="grid-4e"></div>
+                    </div>
+                    <div class="class-row">
+                        <h3>5e</h3>
+                        <div class="class-grid" id="grid-5e"></div>
+                    </div>
+                    <div class="class-row">
+                        <h3>6e</h3>
+                        <div class="class-grid" id="grid-6e"></div>
+                    </div>
                 </div>
-                <div class="class-row">
-                    <h3>4e</h3>
-                    <div class="class-grid" id="grid-4e"></div>
-                </div>
-                <div class="class-row">
-                    <h3>5e</h3>
-                    <div class="class-grid" id="grid-5e"></div>
-                </div>
-                <div class="class-row">
-                    <h3>6e</h3>
-                    <div class="class-grid" id="grid-6e"></div>
-                </div>
-            </div>
+
+                <!-- Bloc du bas : Liste d'attente -->
                 <div class="dashboard-bottom">
                     <h2>Liste d'attente</h2>
                     <div id="liste-attente" class="waiting-list-content"></div>
                 </div>
+
             </div>
         </section>
     </main>
