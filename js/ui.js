@@ -89,7 +89,7 @@ function creerElementAttente(classe) {
 }
 
 // =========================================
-// ANALYSE (Partie Gauche - Unifiée)
+// ANALYSE (Partie Gauche - Hiérarchie)
 // =========================================
 async function chargerAnalyse() {
     const container = document.getElementById('analysis-container');
@@ -102,56 +102,66 @@ async function chargerAnalyse() {
         
         container.innerHTML = ''; 
         const lignes = texte.split('\n');
+        
         let currentContentDiv = null; 
+        let currentAlbumContentDiv = null; // Stocke l'album parent pour y glisser les pistes
 
         lignes.forEach(ligne => {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // Si la ligne commence par une barre oblique inversée (ex: \album:, \single:, \1:)
+            // Détection des balises (\album:, \single:, \1:, etc.)
             if (ligneNettoyee.startsWith('\\')) {
-                // On sépare le "type" (album, single, ou numéro) du reste du texte
+                // 1. Extraire la commande et le texte propre
                 const match = ligneNettoyee.match(/^\\(\w+|[0-9]+):?\s*(.*)/);
-                let titreBrut = ligneNettoyee;
+                const commande = match ? match[1] : "";
+                const texteBrut = match ? match[2] : ligneNettoyee;
                 
-                if (match) {
-                    // On garde ce qu'il y a après les deux points (ou juste l'espace si pas de deux points)
-                    titreBrut = match[2] || ""; 
-                }
-
-                const { url, texteSansUrl } = extraireImage(titreBrut);
+                // 2. Extraire l'image s'il y en a une
+                const { url, texteSansUrl } = extraireImage(texteBrut);
                 
-                // Création de l'accordéon unifié
+                // 3. Créer la rangée
                 const details = document.createElement('details');
                 details.className = 'analysis-details';
+                if (commande.match(/^[0-9]+$/)) details.classList.add('child-track'); 
                 
                 const summary = document.createElement('summary');
-                
-                // S'il y a une image, on l'affiche dans le résumé
                 let imgHTML = url ? `<img src="${url}" alt="Cover" class="summary-cover">` : '';
                 
-                // On nettoie le titre pour enlever les numéros ou les mots-clés (ex: "1: ")
-                let titrePropre = ligneNettoyee.replace(/^\\\w+:?/, '').trim(); 
-                if (!titrePropre && !url) titrePropre = "Sans titre";
-
                 summary.innerHTML = `
                     ${imgHTML}
-                    <span class="summary-title">${titrePropre}</span>
+                    <span class="summary-title">${texteSansUrl || "Sans titre"}</span>
                 `;
                 
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'details-content';
-                
                 details.appendChild(summary);
                 details.appendChild(contentDiv);
-                container.appendChild(details);
+
+                // 4. Logique Parent/Enfant
+                if (commande === "album") {
+                    container.appendChild(details);
+                    currentAlbumContentDiv = contentDiv; // Les prochains \1, \2 iront ici
+                } else if (commande === "single") {
+                    container.appendChild(details);
+                    currentAlbumContentDiv = null; // Fin de l'album
+                } else if (commande.match(/^[0-9]+$/)) {
+                    // Si c'est une piste et qu'on est dans un album, on l'ajoute à l'album
+                    if (currentAlbumContentDiv) {
+                        currentAlbumContentDiv.appendChild(details);
+                    } else {
+                        container.appendChild(details);
+                    }
+                } else {
+                    container.appendChild(details);
+                    currentAlbumContentDiv = null;
+                }
                 
                 currentContentDiv = contentDiv;
                 return;
             }
 
-            // --- TEXTE NORMAL ---
-            // Si ce n'est pas une balise, on l'ajoute au bloc déplié en cours
+            // Texte normal
             if (currentContentDiv) {
                 currentContentDiv.innerHTML += ligneNettoyee + '<br>';
             } else {
@@ -167,4 +177,4 @@ async function chargerAnalyse() {
     }
 }
 
-console.log("ui=version analyse test 3");
+console.log("ui=version analyse test 4");
