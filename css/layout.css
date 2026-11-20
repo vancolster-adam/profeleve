@@ -38,24 +38,32 @@
     background-color: #181818;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    /* Le gap a été supprimé ici pour éviter l'espace géant */
     overflow-y: auto; /* Le scroll se fait ici */
     padding: 0 2rem 2rem 2rem; /* Pas de padding en haut */
 }
 
+/* On gère l'espacement du bas spécifiquement ici */
+.dashboard-top {
+    margin-bottom: 2rem; 
+}
+
 /* =========================================
-   TITRES DES SECTIONS (Sticky en haut)
+   TITRES DES SECTIONS (Sticky avec ombre)
    ========================================= */
 .section-title {
     position: sticky;
     top: 0;
-    padding: 2rem 0 1rem 0; /* Recrée l'espace au-dessus du titre */
+    padding: 2rem 0 1rem 0; 
     margin: 0 0 1rem 0;
     font-size: 1.8rem;
     font-weight: 600;
     color: #ffffff;
-    z-index: 10; /* Force le titre à passer au-dessus du contenu */
+    z-index: 10; 
     width: 100%;
+    
+    /* NOUVEAU : L'effet d'ombre portée */
+    box-shadow: 0 10px 15px -10px rgba(0, 0, 0, 0.8);
 }
 
 /* On donne à chaque titre le fond exact de son panneau pour cacher le texte qui défile */
