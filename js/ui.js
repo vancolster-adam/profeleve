@@ -8,7 +8,7 @@ function creerElementClasse(nomClasse, data) {
         case "returned":
             pastilleHTML = `<div class="status-dot returned" title="Rendu">✓</div>`; break;
         case "scored":
-            pastilleHTML = `<div class="status-dot scored" title="Noté">✓</div>`; break;
+            pastilleHTML = `<div class="status-dot scored" title="Noté">💯</div>`; break; // U+1F4AF
         case "corrected":
             pastilleHTML = `<div class="status-dot corrected" title="Corrigé">✓</div>`; break;
         case "grading":
@@ -34,10 +34,10 @@ function creerElementAttente(classe) {
     const div = document.createElement("div");
     div.className = `waiting-item statut-${classe.statut}`; 
     
+    // On retire "corrected" de ce dictionnaire
     const libellesStatuts = {
         "evaluated": "En attente de correction",
         "grading": "En cours de correction",
-        "corrected": "Corrigé (notes à saisir)",
         "scored": "Noté (à rendre)"
     };
 
