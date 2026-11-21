@@ -151,22 +151,34 @@ async function chargerAnalyse() {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // LECTURE DE LA LIGNE UNLOCK
+            // LECTURE DE LA LIGNE UNLOCK (Méthode simplifiée)
             if (ligneNettoyee.startsWith('\\unlock:')) {
-                // Ce regex capture TOUT ce qui n'est pas { ou [ (les mots de passe)
-                const match = ligneNettoyee.match(/\\unlock:\s*([^{[]+?)\s*(?:\{(.*?)\})?\s*(?:\[(.*?)\])?/);
+                const contenu = ligneNettoyee.replace('\\unlock:', '').trim();
                 
-                if (match) {
-                    const pwds = match[1].split(',').map(p => p.trim()).filter(p => p);
-                    pwds.forEach(p => allPasswords.add(p)); 
-                    currentPwd = pwds.join(' '); 
-                    
-                    if (match[2]) {
-                        pwds.forEach(p => window.unlockMessages[p] = match[2]);
-                    }
-                    if (match[3]) {
-                        pendingUnlockText = match[3];
-                    }
+                // 1. Extraire le message {}
+                let msgConsole = "";
+                const matchMsg = contenu.match(/\{(.*?)\}/);
+                if (matchMsg) msgConsole = matchMsg[1];
+                
+                // 2. Extraire le bonus []
+                let txtBonus = "";
+                const matchBonus = contenu.match(/\[(.*?)\]/);
+                if (matchBonus) txtBonus = matchBonus[1];
+                
+                // 3. Extraire les mots de passe (tout ce qui n'est pas {} ou [])
+                let chainePwd = contenu;
+                if (matchMsg) chainePwd = chainePwd.replace(matchMsg[0], '');
+                if (matchBonus) chainePwd = chainePwd.replace(matchBonus[0], '');
+                
+                const pwds = chainePwd.split(',').map(p => p.trim()).filter(p => p);
+                pwds.forEach(p => allPasswords.add(p)); 
+                currentPwd = pwds.join(' '); 
+                
+                if (msgConsole) {
+                    pwds.forEach(p => window.unlockMessages[p] = msgConsole);
+                }
+                if (txtBonus) {
+                    pendingUnlockText = txtBonus;
                 }
                 return;
             }
@@ -239,14 +251,29 @@ async function chargerAnalyse() {
         });
 
         // CRÉATION DES FONCTIONS
-        allPasswords.forEach(pwd => {
-            const cleanPwd = pwd.replace(/[^a-zA-Z0-9_]/g, ''); 
-            if (cleanPwd) {
-                window[cleanPwd] = function() {
-                    window.unlock(pwd);
-                };
-            }
-        });
+        if (allPasswords.size === 0) {
+            console.warn("⚠️ Aucun mot de passe trouvé. Vérifie l'orthographe de \\unlock:");
+        } else {
+            allPasswords.forEach(pwd => {
+                // On supprime les espaces pour le nom de la fonction (ex: "I do" -> "Ido")
+                const cleanPwd = pwd.replace(/\s+/g, ''); 
+                
+                // On crée la fonction globale
+                if (cleanPwd) {
+                    window[cleanPwd] = function() {
+                        window.unlock(pwd);
+                    };
+                    
+                    // ASTUCE : On crée aussi la version tout en minuscules
+                    // pour éviter les erreurs de majuscules (ex: Dounia -> dounia)
+                    const lowerPwd = cleanPwd.toLowerCase();
+                    if (lowerPwd !== cleanPwd) {
+                        window[lowerPwd] = window[cleanPwd];
+                    }
+                }
+            });
+            console.log(`🔓 Mots de passe actifs :`, Array.from(allPasswords).join(', '));
+        }
 
     } catch (error) {
         console.error("Erreur d'analyse :", error);
@@ -254,4 +281,4 @@ async function chargerAnalyse() {
     }
 }
 
-console.log("ui=version 8 (Fix regex unlock)");
+console.log("ui=version 9 (Parsing robuste)");
