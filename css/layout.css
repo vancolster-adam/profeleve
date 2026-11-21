@@ -99,7 +99,7 @@
 .panel-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.4); }
 
 .analysis-container {
-    width: 65%; /* Il prend 65% de l'espace... */
+    width: 80%; /* Il prend 65% de l'espace... */
     min-width: 700px; /* ...mais jamais moins de 700px (ton état de base parfait) */
     max-width: 1000px; /* ...et jamais plus de 1000px pour rester lisible */
     display: flex;
