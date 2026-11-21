@@ -144,28 +144,38 @@
 /* =========================================
    SYSTÈME DE DOUBLE VERSION (PUB/PRIV)
    ========================================= */
-   
-/* Par défaut : on voit le public, on cache le privé */
 .version-pub { display: inline; }
 .version-priv { display: none; }
 
-/* Quand la classe "unlocked" est ajoutée par le JS (via la console) */
+/* Texte privé déverrouillé : AUCUN style, juste le texte normal */
 .version-priv.unlocked { 
     display: inline; 
-    background-color: rgba(255, 152, 0, 0.15); /* Petit surlignage orange */
-    padding: 0.1rem 0.3rem;
-    border-radius: 4px;
-    color: #ffb300;
+    background: none;
+    color: inherit;
+    padding: 0;
+    border: none;
 }
 
-/* Si le texte public est dans un bloc déverrouillé, on le cache */
+/* On cache le texte public s'il est remplacé */
 span.version-pub:has(+ .version-priv.unlocked) {
     display: none;
 }
 
-/* Un petit effet de transition */
-.version-priv, .version-pub {
-    transition: all 0.3s ease;
+/* =========================================
+   BLOC BONUS (Les crochets [])
+   ========================================= */
+.unlock-reveal-box {
+    display: none; 
+    /* Style discret à côté du titre */
+    font-style: italic;
+    color: #888;
+    font-size: 0.85rem;
+    margin-left: 0.8rem;
+    font-weight: normal;
+}
+
+.unlock-reveal-box.unlocked {
+    display: inline; /* Reste sur la même ligne que le titre */
 }
 
 /* =========================================
@@ -178,22 +188,3 @@ span.version-pub:has(+ .version-priv.unlocked) {
     .waiting-item { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
 }
 
-/* =========================================
-   BLOC BONUS (Crochets [])
-   ========================================= */
-.unlock-reveal-box {
-    display: none; /* Caché par défaut */
-    background-color: #333;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    border-left: 4px solid #ff9800; /* Une belle bordure orange */
-    color: #fff;
-    font-weight: 500;
-    font-style: italic;
-}
-
-.unlock-reveal-box.unlocked {
-    display: block;
-    animation: slideDownFade 0.3s ease-out forwards;
-}
