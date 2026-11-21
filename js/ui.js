@@ -47,12 +47,15 @@ window.unlockMessages = {};
 window.unlock = function(...passwords) {
     let found = false;
     passwords.forEach(pwd => {
+        // 1. Révéler les textes privés (sans surlignage)
         const texts = document.querySelectorAll(`.version-priv[data-unlock-pwd~="${pwd}"]`);
         texts.forEach(el => { el.classList.add('unlocked'); found = true; });
 
+        // 2. Révéler les textes bonus (entre crochets)
         const boxes = document.querySelectorAll(`.unlock-reveal-box[data-unlock-pwd~="${pwd}"]`);
         boxes.forEach(el => { el.classList.add('unlocked'); found = true; });
 
+        // 3. Afficher le message dans la console
         if (window.unlockMessages[pwd]) {
             console.log(`✨ ${window.unlockMessages[pwd]}`);
             found = true;
@@ -61,6 +64,7 @@ window.unlock = function(...passwords) {
     if (!found) console.log("❌ Mot de passe incorrect.");
 };
 
+// Raccourci pratique
 window.u = window.unlock; 
 
 // =========================================
@@ -151,21 +155,18 @@ async function chargerAnalyse() {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // LECTURE DE LA LIGNE UNLOCK (Méthode simplifiée)
+            // LECTURE DE LA LIGNE UNLOCK
             if (ligneNettoyee.startsWith('\\unlock:')) {
                 const contenu = ligneNettoyee.replace('\\unlock:', '').trim();
                 
-                // 1. Extraire le message {}
                 let msgConsole = "";
                 const matchMsg = contenu.match(/\{(.*?)\}/);
                 if (matchMsg) msgConsole = matchMsg[1];
                 
-                // 2. Extraire le bonus []
                 let txtBonus = "";
                 const matchBonus = contenu.match(/\[(.*?)\]/);
                 if (matchBonus) txtBonus = matchBonus[1];
                 
-                // 3. Extraire les mots de passe (tout ce qui n'est pas {} ou [])
                 let chainePwd = contenu;
                 if (matchMsg) chainePwd = chainePwd.replace(matchMsg[0], '');
                 if (matchBonus) chainePwd = chainePwd.replace(matchBonus[0], '');
@@ -198,22 +199,21 @@ async function chargerAnalyse() {
                 const summary = document.createElement('summary');
                 let imgHTML = url ? `<img src="${url}" alt="Cover" class="summary-cover">` : '';
                 
+                // On prépare le texte bonus pour l'insérer directement dans le titre (à côté)
+                let bonusHTML = "";
+                if (pendingUnlockText) {
+                    bonusHTML = `<span class="unlock-reveal-box" data-unlock-pwd="${currentPwd}">[${pendingUnlockText}]</span>`;
+                    pendingUnlockText = ""; // On réinitialise après l'avoir utilisé
+                }
+
                 summary.innerHTML = `
                     ${imgHTML}
                     <span class="summary-title">${texteSansUrl || "Sans titre"}</span>
+                    ${bonusHTML}
                 `;
                 
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'details-content';
-
-                if (pendingUnlockText) {
-                    const unlockBox = document.createElement('div');
-                    unlockBox.className = 'unlock-reveal-box';
-                    unlockBox.setAttribute('data-unlock-pwd', currentPwd);
-                    unlockBox.innerHTML = pendingUnlockText;
-                    contentDiv.appendChild(unlockBox);
-                    pendingUnlockText = ""; 
-                }
 
                 details.appendChild(summary);
                 details.appendChild(contentDiv);
@@ -250,22 +250,18 @@ async function chargerAnalyse() {
             }
         });
 
-        // CRÉATION DES FONCTIONS
+        // CRÉATION DES FONCTIONS DE DÉVERROUILLAGE
         if (allPasswords.size === 0) {
             console.warn("⚠️ Aucun mot de passe trouvé. Vérifie l'orthographe de \\unlock:");
         } else {
             allPasswords.forEach(pwd => {
-                // On supprime les espaces pour le nom de la fonction (ex: "I do" -> "Ido")
                 const cleanPwd = pwd.replace(/\s+/g, ''); 
                 
-                // On crée la fonction globale
                 if (cleanPwd) {
                     window[cleanPwd] = function() {
                         window.unlock(pwd);
                     };
                     
-                    // ASTUCE : On crée aussi la version tout en minuscules
-                    // pour éviter les erreurs de majuscules (ex: Dounia -> dounia)
                     const lowerPwd = cleanPwd.toLowerCase();
                     if (lowerPwd !== cleanPwd) {
                         window[lowerPwd] = window[cleanPwd];
@@ -281,4 +277,4 @@ async function chargerAnalyse() {
     }
 }
 
-console.log("ui=version 9 (Parsing robuste)");
+console.log("ui=version 10 (Finalisation Pub/Priv)");
