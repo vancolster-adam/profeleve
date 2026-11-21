@@ -129,11 +129,16 @@
 .summary-cover { width: 40px; height: 40px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
 
 .analysis-details .details-content { 
-    padding: 0 0 1.5rem 0; /* Padding seulement en bas */
+    padding: 0 0 1.5rem 0;
     background-color: transparent; 
     line-height: 1.7; 
     color: #a0a0a0; 
     font-size: 0.95rem;
+    
+    /* NOUVEAU : Pour des lignes complètes et propres */
+    text-align: justify; /* Étire le texte pour qu'il touche les deux bords */
+    hyphens: auto;       /* Coupe les mots si nécessaire pour éviter les trous */
+    text-wrap: pretty;   /* Évite d'avoir un seul mot tout seul sur la dernière ligne (navigateurs récents) */
 }
 
 /* =========================================
