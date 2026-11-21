@@ -43,4 +43,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-console.log("resizer=version 2 (temps réel)");
+console.log("resizer=version 1");
