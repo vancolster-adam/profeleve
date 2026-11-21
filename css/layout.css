@@ -98,20 +98,16 @@
 .panel-content:hover::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); }
 .panel-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.4); }
 
-/* 
-   LE TEXTE S'ADAPTE : 
-   width: 90% -> Il mange 90% de l'espace disponible.
-   max-width: 1200px -> Il ne dépasse jamais 1200px pour rester lisible.
-*/
 .analysis-container {
-    width: 100%; 
-    max-width: 1200px; 
+    width: 65%; /* Il prend 65% de l'espace... */
+    min-width: 700px; /* ...mais jamais moins de 700px (ton état de base parfait) */
+    max-width: 1000px; /* ...et jamais plus de 1000px pour rester lisible */
     display: flex;
     flex-direction: column;
     gap: 1rem;
     color: #d1d1d1;
     margin: 0 auto;
-    transition: width 0.1s; /* Rend l'adaptation encore plus fluide visuellement */
+    transition: width 0.1s;
 }
 
 .dashboard-top { margin-bottom: 2rem; }
