@@ -104,7 +104,7 @@
    max-width: 1200px -> Il ne dépasse jamais 1200px pour rester lisible.
 */
 .analysis-container {
-    width: 65%; 
+    width: 100%; 
     max-width: 1200px; 
     display: flex;
     flex-direction: column;
