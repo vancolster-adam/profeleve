@@ -48,12 +48,12 @@ function parserDoubleVersion(texte, pwdString) {
     return texte;
 }
 
-// Fonction globale accessible depuis la console
+// Fonction globale pour déverrouiller
 window.unlock = function(...passwords) {
     let found = false;
     passwords.forEach(pwd => {
-        // On cherche tous les éléments qui ont ce mot de passe
-        const elements = document.querySelectorAll(`.version-priv[data-unlock-pwd*="${pwd}"]`);
+        // On utilise l'attribut ~= pour chercher un mot exact dans une liste séparée par des espaces
+        const elements = document.querySelectorAll(`.version-priv[data-unlock-pwd~="${pwd}"]`);
         elements.forEach(el => {
             el.classList.add('unlocked');
             found = true;
@@ -66,6 +66,9 @@ window.unlock = function(...passwords) {
         console.log("❌ Mot de passe incorrect ou aucune analyse correspondante.");
     }
 };
+
+// Raccourci "u" pour les élèves
+window.u = window.unlock; 
 
 // =========================================
 // DASHBOARD (Partie Droite)
@@ -136,6 +139,8 @@ async function chargerAnalyse() {
     const container = document.getElementById('analysis-container');
     if (!container) return;
 
+    const allPasswords = new Set(); // Stocke tous les mots de passe trouvés
+
     try {
         const response = await fetch('data/analyses.txt');
         if (!response.ok) throw new Error("Fichier introuvable");
@@ -146,18 +151,23 @@ async function chargerAnalyse() {
         
         let currentContentDiv = null; 
         let currentAlbumContentDiv = null; 
-        let currentPwd = ""; // Stocke les mots de passe de la section en cours
+        let currentPwd = ""; 
 
         lignes.forEach(ligne => {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // Détection de la balise de mot de passe
+            // Détection des mots de passe
             if (ligneNettoyee.startsWith('\\unlock:')) {
-                currentPwd = ligneNettoyee.replace('\\unlock:', '').trim();
+                const pwds = ligneNettoyee.replace('\\unlock:', '').split(',').map(p => p.trim()).filter(p => p);
+                pwds.forEach(p => allPasswords.add(p)); 
+                
+                // On stocke les mots de passe sous forme de liste séparée par des espaces
+                currentPwd = pwds.join(' '); 
                 return;
             }
 
+            // Détection des balises d'analyse
             if (ligneNettoyee.startsWith('\\')) {
                 const match = ligneNettoyee.match(/^\\(\w+|[0-9]+):?\s*(.*)/);
                 const commande = match ? match[1] : "";
@@ -182,6 +192,7 @@ async function chargerAnalyse() {
                 details.appendChild(summary);
                 details.appendChild(contentDiv);
 
+                // Logique Parent/Enfant
                 if (commande === "album") {
                     container.appendChild(details);
                     currentAlbumContentDiv = contentDiv;
@@ -205,7 +216,6 @@ async function chargerAnalyse() {
 
             // Texte normal avec gestion Pub/Priv
             if (currentContentDiv) {
-                // On traite le texte pour remplacer les balises { } par du HTML
                 const texteFormate = parserDoubleVersion(ligneNettoyee, currentPwd);
                 currentContentDiv.innerHTML += texteFormate + '<br>';
             } else {
@@ -215,9 +225,20 @@ async function chargerAnalyse() {
             }
         });
 
+        // Création dynamique des fonctions de déverrouillage (ex: window.secret = ...)
+        allPasswords.forEach(pwd => {
+            const cleanPwd = pwd.replace(/[^a-zA-Z0-9_]/g, ''); // Nettoyage du nom
+            if (cleanPwd) {
+                window[cleanPwd] = function() {
+                    window.unlock(pwd);
+                };
+            }
+        });
+
     } catch (error) {
         console.error("Erreur d'analyse :", error);
         container.innerHTML = `<p class="placeholder-text">Erreur : Impossible de charger l'analyse.</p>`;
     }
 }
-console.log("ui=version pub/priv");
+
+console.log("ui=version 6 (Double version + Mots de passe dynamiques)");
