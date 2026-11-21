@@ -45,4 +45,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-console.log("logic=version resizer 1");
+console.log("recizer=version resizer 1");
