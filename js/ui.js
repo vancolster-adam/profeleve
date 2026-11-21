@@ -42,32 +42,23 @@ function parserDoubleVersion(texte, pwdString) {
     return texte;
 }
 
-// Variables globales pour stocker les messages de la console
 window.unlockMessages = {};
 
-// Fonction globale pour déverrouiller
 window.unlock = function(...passwords) {
     let found = false;
-    
     passwords.forEach(pwd => {
-        // 1. Révéler les textes privés
         const texts = document.querySelectorAll(`.version-priv[data-unlock-pwd~="${pwd}"]`);
         texts.forEach(el => { el.classList.add('unlocked'); found = true; });
 
-        // 2. Révéler les blocs bonus (les crochets [])
         const boxes = document.querySelectorAll(`.unlock-reveal-box[data-unlock-pwd~="${pwd}"]`);
         boxes.forEach(el => { el.classList.add('unlocked'); found = true; });
 
-        // 3. Afficher le message dans la console s'il existe
         if (window.unlockMessages[pwd]) {
             console.log(`✨ ${window.unlockMessages[pwd]}`);
             found = true;
         }
     });
-    
-    if (!found) {
-        console.log("❌ Mot de passe incorrect ou aucune analyse correspondante.");
-    }
+    if (!found) console.log("❌ Mot de passe incorrect.");
 };
 
 window.u = window.unlock; 
@@ -143,7 +134,7 @@ async function chargerAnalyse() {
 
     const allPasswords = new Set(); 
     let currentPwd = ""; 
-    let pendingUnlockText = ""; // Stocke le texte [] pour le prochain titre
+    let pendingUnlockText = ""; 
 
     try {
         const response = await fetch('data/analyses.txt');
@@ -160,22 +151,19 @@ async function chargerAnalyse() {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // Détection de la ligne \unlock:
+            // LECTURE DE LA LIGNE UNLOCK
             if (ligneNettoyee.startsWith('\\unlock:')) {
-                // On extrait le mot de passe, le message console {} et le texte page []
-                const match = ligneNettoyee.match(/\\unlock:\s*([^\s\{]+)\s*(?:\{(.*?)\})?\s*(?:\[(.*?)\])?/);
+                // Ce regex capture TOUT ce qui n'est pas { ou [ (les mots de passe)
+                const match = ligneNettoyee.match(/\\unlock:\s*([^{[]+?)\s*(?:\{(.*?)\})?\s*(?:\[(.*?)\])?/);
                 
                 if (match) {
                     const pwds = match[1].split(',').map(p => p.trim()).filter(p => p);
                     pwds.forEach(p => allPasswords.add(p)); 
                     currentPwd = pwds.join(' '); 
                     
-                    // On stocke le message de la console pour chaque mot de passe
                     if (match[2]) {
                         pwds.forEach(p => window.unlockMessages[p] = match[2]);
                     }
-                    
-                    // On stocke le texte bonus à afficher sur la page
                     if (match[3]) {
                         pendingUnlockText = match[3];
                     }
@@ -183,7 +171,7 @@ async function chargerAnalyse() {
                 return;
             }
 
-            // Détection des balises d'analyse
+            // TITRES ET PISTES
             if (ligneNettoyee.startsWith('\\')) {
                 const match = ligneNettoyee.match(/^\\(\w+|[0-9]+):?\s*(.*)/);
                 const commande = match ? match[1] : "";
@@ -206,14 +194,13 @@ async function chargerAnalyse() {
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'details-content';
 
-                // Si on a un texte en attente (le []), on l'ajoute dans le contenu
                 if (pendingUnlockText) {
                     const unlockBox = document.createElement('div');
                     unlockBox.className = 'unlock-reveal-box';
                     unlockBox.setAttribute('data-unlock-pwd', currentPwd);
                     unlockBox.innerHTML = pendingUnlockText;
                     contentDiv.appendChild(unlockBox);
-                    pendingUnlockText = ""; // On réinitialise pour le prochain
+                    pendingUnlockText = ""; 
                 }
 
                 details.appendChild(summary);
@@ -240,7 +227,7 @@ async function chargerAnalyse() {
                 return;
             }
 
-            // Texte normal
+            // TEXTE NORMAL
             if (currentContentDiv) {
                 const texteFormate = parserDoubleVersion(ligneNettoyee, currentPwd);
                 currentContentDiv.innerHTML += texteFormate + '<br>';
@@ -251,7 +238,7 @@ async function chargerAnalyse() {
             }
         });
 
-        // Création dynamique des fonctions
+        // CRÉATION DES FONCTIONS
         allPasswords.forEach(pwd => {
             const cleanPwd = pwd.replace(/[^a-zA-Z0-9_]/g, ''); 
             if (cleanPwd) {
@@ -267,4 +254,4 @@ async function chargerAnalyse() {
     }
 }
 
-console.log("ui=version 7 (Messages console et blocs bonus)");
+console.log("ui=version 8 (Fix regex unlock)");
