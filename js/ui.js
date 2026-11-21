@@ -27,6 +27,47 @@ function extraireImage(texte) {
 }
 
 // =========================================
+// GESTION DES VERSIONS PUB/PRIV
+// =========================================
+function parserDoubleVersion(texte, pwdString) {
+    // 1. Gérer les cas avec Pub ET Priv : {\pub: ... ;; \priv: ...}
+    texte = texte.replace(/\{\s*\\pub:\s*(.*?)\s*;;\s*\\priv:\s*(.*?)\s*\}/g, (match, textePub, textePriv) => {
+        return `<span class="version-pub">${textePub}</span><span class="version-priv" data-unlock-pwd="${pwdString}">${textePriv}</span>`;
+    });
+
+    // 2. Gérer les cas avec seulement Priv : {\priv: ...}
+    texte = texte.replace(/\{\s*\\priv:\s*(.*?)\s*\}/g, (match, textePriv) => {
+        return `<span class="version-priv" data-unlock-pwd="${pwdString}">${textePriv}</span>`;
+    });
+
+    // 3. Gérer les cas avec seulement Pub : {\pub: ...}
+    texte = texte.replace(/\{\s*\\pub:\s*(.*?)\s*\}/g, (match, textePub) => {
+        return `<span class="version-pub">${textePub}</span>`;
+    });
+
+    return texte;
+}
+
+// Fonction globale accessible depuis la console
+window.unlock = function(...passwords) {
+    let found = false;
+    passwords.forEach(pwd => {
+        // On cherche tous les éléments qui ont ce mot de passe
+        const elements = document.querySelectorAll(`.version-priv[data-unlock-pwd*="${pwd}"]`);
+        elements.forEach(el => {
+            el.classList.add('unlocked');
+            found = true;
+        });
+    });
+    
+    if (found) {
+        console.log("✅ Analyse(s) déverrouillée(s) avec succès !");
+    } else {
+        console.log("❌ Mot de passe incorrect ou aucune analyse correspondante.");
+    }
+};
+
+// =========================================
 // DASHBOARD (Partie Droite)
 // =========================================
 function creerElementClasse(nomClasse, data) {
@@ -89,7 +130,7 @@ function creerElementAttente(classe) {
 }
 
 // =========================================
-// ANALYSE (Partie Gauche - Hiérarchie)
+// ANALYSE (Partie Gauche)
 // =========================================
 async function chargerAnalyse() {
     const container = document.getElementById('analysis-container');
@@ -104,23 +145,26 @@ async function chargerAnalyse() {
         const lignes = texte.split('\n');
         
         let currentContentDiv = null; 
-        let currentAlbumContentDiv = null; // Stocke l'album parent pour y glisser les pistes
+        let currentAlbumContentDiv = null; 
+        let currentPwd = ""; // Stocke les mots de passe de la section en cours
 
         lignes.forEach(ligne => {
             const ligneNettoyee = ligne.trim();
             if (!ligneNettoyee) return;
 
-            // Détection des balises (\album:, \single:, \1:, etc.)
+            // Détection de la balise de mot de passe
+            if (ligneNettoyee.startsWith('\\unlock:')) {
+                currentPwd = ligneNettoyee.replace('\\unlock:', '').trim();
+                return;
+            }
+
             if (ligneNettoyee.startsWith('\\')) {
-                // 1. Extraire la commande et le texte propre
                 const match = ligneNettoyee.match(/^\\(\w+|[0-9]+):?\s*(.*)/);
                 const commande = match ? match[1] : "";
                 const texteBrut = match ? match[2] : ligneNettoyee;
                 
-                // 2. Extraire l'image s'il y en a une
                 const { url, texteSansUrl } = extraireImage(texteBrut);
                 
-                // 3. Créer la rangée
                 const details = document.createElement('details');
                 details.className = 'analysis-details';
                 if (commande.match(/^[0-9]+$/)) details.classList.add('child-track'); 
@@ -138,15 +182,13 @@ async function chargerAnalyse() {
                 details.appendChild(summary);
                 details.appendChild(contentDiv);
 
-                // 4. Logique Parent/Enfant
                 if (commande === "album") {
                     container.appendChild(details);
-                    currentAlbumContentDiv = contentDiv; // Les prochains \1, \2 iront ici
+                    currentAlbumContentDiv = contentDiv;
                 } else if (commande === "single") {
                     container.appendChild(details);
-                    currentAlbumContentDiv = null; // Fin de l'album
+                    currentAlbumContentDiv = null;
                 } else if (commande.match(/^[0-9]+$/)) {
-                    // Si c'est une piste et qu'on est dans un album, on l'ajoute à l'album
                     if (currentAlbumContentDiv) {
                         currentAlbumContentDiv.appendChild(details);
                     } else {
@@ -161,12 +203,14 @@ async function chargerAnalyse() {
                 return;
             }
 
-            // Texte normal
+            // Texte normal avec gestion Pub/Priv
             if (currentContentDiv) {
-                currentContentDiv.innerHTML += ligneNettoyee + '<br>';
+                // On traite le texte pour remplacer les balises { } par du HTML
+                const texteFormate = parserDoubleVersion(ligneNettoyee, currentPwd);
+                currentContentDiv.innerHTML += texteFormate + '<br>';
             } else {
                 const p = document.createElement('p');
-                p.innerHTML = ligneNettoyee;
+                p.innerHTML = parserDoubleVersion(ligneNettoyee, currentPwd);
                 container.appendChild(p);
             }
         });
@@ -176,5 +220,4 @@ async function chargerAnalyse() {
         container.innerHTML = `<p class="placeholder-text">Erreur : Impossible de charger l'analyse.</p>`;
     }
 }
-
-console.log("ui=version analyse test 4");
+console.log("ui=version pub/priv");
