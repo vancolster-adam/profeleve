@@ -173,7 +173,7 @@ span.version-pub:has(+ .version-priv.unlocked) {
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 0.75rem;
-    font-family: monospace; /* Pour le côté technique */
+    /* font-family: monospace; *//* Pour le côté technique */
     margin-left: 0.8rem;
     vertical-align: middle;
 }
