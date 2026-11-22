@@ -166,16 +166,20 @@ span.version-pub:has(+ .version-priv.unlocked) {
    ========================================= */
 .unlock-reveal-box {
     display: none; 
-    /* Style discret à côté du titre */
-    font-style: italic;
-    color: #888;
-    font-size: 0.85rem;
+    
+    /* Le look "box grise" */
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: #d1d1d1;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: monospace; /* Pour le côté technique */
     margin-left: 0.8rem;
-    font-weight: normal;
+    vertical-align: middle;
 }
 
 .unlock-reveal-box.unlocked {
-    display: inline; /* Reste sur la même ligne que le titre */
+    display: inline-block; /* Permet d'appliquer le padding sans casser la ligne */
 }
 
 /* =========================================
