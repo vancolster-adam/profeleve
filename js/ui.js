@@ -202,7 +202,7 @@ async function chargerAnalyse() {
                 // On prépare le texte bonus pour l'insérer directement dans le titre (à côté)
                 let bonusHTML = "";
                 if (pendingUnlockText) {
-                    bonusHTML = `<span class="unlock-reveal-box" data-unlock-pwd="${currentPwd}">[${pendingUnlockText}]</span>`;
+                    bonusHTML = `<span class="unlock-reveal-box" data-unlock-pwd="${currentPwd}">${pendingUnlockText}</span>`;
                     pendingUnlockText = ""; // On réinitialise après l'avoir utilisé
                 }
 
